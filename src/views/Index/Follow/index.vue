@@ -19,11 +19,10 @@ export default {
 
 <style scoped>
 #follow {
-  position: absolute;
-  right: 0;
   width: 242px;
   height: 500px;
   padding: 8px;
+  border-radius: 4px;
   background-color: violet;
 }
 </style>

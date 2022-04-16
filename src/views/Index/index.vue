@@ -2,10 +2,10 @@
   <div id="index">
     <div class="container">
       <Navigate />
-      <Follow />
       <div class="main"></div>
+      <Follow />
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -15,43 +15,23 @@ export default {
   components: {
     Follow,
   },
+  mounted() {
+  },
+  methods: {
+  },
 };
 </script>
 
 <style scoped>
-@media screen and (max-width: 1131px) {
-  #follow {
-    display: none;
-  }
-  #navigate {
-    width: 200px;
-  }
-  div.main {
-    position: absolute;
-    right: 0;
-    width: calc(100% - 208px);
-  }
-}
-@media screen and (max-width: 690px) {
-  #navigate {
-    display: none;
-  }
-  div.main {
-    width: 100%;
-  }
-  div.container {
-    width: 100%;
-  }
-}
 #index {
   display: flex;
   justify-content: center;
   margin-top: 55px;
+  opacity: 0.95;
 }
 .container {
   display: flex;
-  justify-content: center;
-  position: relative;
+  justify-content:space-between;
   max-width: 1420px;
   min-width: 360px;
   width: 95%;
@@ -59,9 +39,17 @@ export default {
   background-color: antiquewhite;
 }
 .main {
+  flex: 1;
+  margin: 0 8px;
   min-width: 360px;
-  width: calc(100% - 502px);
-  height: 100%;
   background-color: blueviolet;
+}
+#navigate {
+  position: sticky;
+  top: 55px;
+}
+#follow {
+  position: sticky;
+  top: 55px;
 }
 </style>

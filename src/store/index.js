@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    navIndex: 0
   },
   mutations: {
+    CHANGENAVINDEX() {
+
+    }
   },
   actions: {
   },

@@ -1,8 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-let Index = () => import('../views/Index/')
+let Index = () => import('@/views/Index/')
+let LostAndFound = () => import('@/views/LostAndFound/')
 
 Vue.use(VueRouter)
+
+//解决路由重复跳转报错问题
+let originPush = VueRouter.prototype.push
+//重写push|replace
+VueRouter.prototype.push = function(location, resolve, reject) {
+  if(resolve && reject) {
+    originPush.call(this, location, resolve, reject)
+  } else {
+    originPush.call(this, location, () => {}, () => {})
+  }
+}
 
 const routes = [
   {
@@ -14,6 +26,11 @@ const routes = [
     name: 'Index',
     component: Index
   },
+  {
+    path: '/lost-and-found',
+    name: 'LostAndFound',
+    component: LostAndFound
+  }
 ]
 
 const router = new VueRouter({
