@@ -1,7 +1,6 @@
 <template>
-  <div id="index">
+  <div class="index">
     <div class="container">
-      <Navigate />
       <div class="main"></div>
       <Follow />
     </div>
@@ -15,40 +14,37 @@ export default {
   components: {
     Follow,
   },
-  mounted() {
-  },
-  methods: {
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 
 <style lang="less" scoped>
-#index {
+.index {
   display: flex;
   justify-content: center;
-  margin-top: 55px;
-}
-.container {
-  display: flex;
-  justify-content:space-between;
-  max-width: 1420px;
-  min-width: 360px;
-  width: 95%;
-  height: 1500px;
-  // background-color: antiquewhite;
-}
-.main {
-  flex: 1;
-  margin: 0 8px;
-  min-width: 360px;
-  background-color: blueviolet;
-}
-#navigate {
-  position: sticky;
-  top: 55px;
-}
-#follow {
-  position: sticky;
-  top: 55px;
+  margin-top: 3px;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 1500px;
+
+    .main {
+      flex: 1;
+      margin: 0 @normal-padding;
+      min-width: 360px;
+      border-radius: @normal-radius;
+      background: rgba(255, 255, 255, 0.75);
+      transition: all 0.3s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.85);
+      }
+    }
+
+    
+  }
 }
 </style>

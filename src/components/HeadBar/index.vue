@@ -1,5 +1,5 @@
 <template>
-  <div id="head-bar">
+  <div class="head-bar">
     head-bar
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#head-bar {
+.head-bar {
   position: fixed;
   top: 0px;
   width: 100%;

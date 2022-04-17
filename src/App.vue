@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <HeadBar />
-    <router-view />
+    <!-- <HeadBar /> -->
+    <div class="wrapper">
+      <Navigate />
+      <div class="left-content">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -17,7 +22,19 @@ export default {
 body {
   background-image: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 100%);
   background-attachment: fixed;
+
+  #app {
+    display: flex;
+    justify-content: center;
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      .container-base();
+
+      .left-content {
+        flex: 1;
+      }
+    }
+  }
 }
-
-
 </style>
