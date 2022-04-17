@@ -9,24 +9,22 @@ export default {
   name: "NavItem",
   props: {
     pathTo: {
-      default: '/index'
-    }
+      default: "/index",
+    },
   },
   data() {
-    return {
-    }
+    return {};
   },
   methods: {
     handlePathTo() {
-      this.$router.push(this.pathTo)
-    }
+      this.$router.push(this.pathTo);
+    },
   },
-  computed: {
-  }
-}
+  computed: {},
+};
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #nav-item {
   display: flex;
   justify-content: center;
@@ -37,18 +35,20 @@ export default {
   margin-bottom: 15px;
   cursor: pointer;
   background-color: aqua;
-}
-.nav-item-content {
-  display: inline-block;
-  width: 100%;
-  height: 35px;
-  text-align: center;
-  border-radius: 30px;
-  background-color:brown;
-}
-.nav-item-content a {
-  font-weight: 600;
-  color: #303133;
-  line-height: 35px;
+
+  .nav-item-content {
+    display: inline-block;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    border-radius: 30px;
+    background-color: brown;
+
+    a {
+      font-weight: 600;
+      color: #303133;
+      line-height: 35px;
+    }
+  }
 }
 </style>

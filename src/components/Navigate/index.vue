@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #navigate {
   width: 242px;
   height: 500px;

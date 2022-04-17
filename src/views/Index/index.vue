@@ -22,12 +22,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #index {
   display: flex;
   justify-content: center;
   margin-top: 55px;
-  opacity: 0.95;
 }
 .container {
   display: flex;
@@ -36,7 +35,7 @@ export default {
   min-width: 360px;
   width: 95%;
   height: 1500px;
-  background-color: antiquewhite;
+  // background-color: antiquewhite;
 }
 .main {
   flex: 1;

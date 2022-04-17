@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #follow {
   width: 242px;
   height: 500px;

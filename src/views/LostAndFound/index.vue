@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #lost-and-found {
   display: flex;
   justify-content: center;

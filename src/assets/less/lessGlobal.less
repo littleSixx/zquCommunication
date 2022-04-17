@@ -1,0 +1,39 @@
+@container-max-width: 1440px;
+@container-min-width: 360px;
+@container-normal-width: 95%;
+@container-opacity: 0.95;
+.container-base {
+  max-width: @container-max-width;
+  min-width: @container-min-width;
+  width: @container-normal-width;
+  opacity: @container-opacity;
+}
+
+@media screen and (max-width: 992px) {
+  #follow {
+    display: none;
+  }
+  #navigate {
+    width: 200px;
+  }
+  div.main {
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 728px) {
+  #navigate {
+    display: none;
+  }
+  div.container div.main {
+    margin: 0 0;
+  }
+  div.container {
+    width: 100% !important;
+  }
+}
+
+#app {
+  .container {
+    .container-base();
+  }
+}
