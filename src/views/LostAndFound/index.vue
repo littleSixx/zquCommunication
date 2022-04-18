@@ -30,6 +30,7 @@ export default {
       margin:0 @normal-padding;
       // margin-left: 8px;
       min-width: 360px;
+      border-radius: @normal-radius;
       background: rgba(255, 255, 255, 0.75);
       transition: all 0.3s;
 

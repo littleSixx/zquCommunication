@@ -1,7 +1,13 @@
 <template>
   <div class="index">
     <div class="container">
-      <div class="main"></div>
+      <div class="main">
+        <MainPostItem />
+        <MainPostItem />
+        <MainPostItem />
+        <MainPostItem />
+        <MainPostItem />
+      </div>
       <Follow />
     </div>
   </div>
@@ -9,10 +15,13 @@
 
 <script>
 import Follow from "@/views/Index/Follow/";
+import MainPostItem from "@/views/Index/MainPostItem/"
+
 export default {
   name: "Index",
   components: {
     Follow,
+    MainPostItem
   },
   mounted() {},
   methods: {},
@@ -34,13 +43,13 @@ export default {
     .main {
       flex: 1;
       margin: 0 @normal-padding;
-      min-width: 360px;
+      // min-width: 360px;
       border-radius: @normal-radius;
-      background: rgba(255, 255, 255, 0.75);
+      
       transition: all 0.3s;
 
       &:hover {
-        background: rgba(255, 255, 255, 0.85);
+        
       }
     }
 

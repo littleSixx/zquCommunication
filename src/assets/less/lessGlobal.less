@@ -4,11 +4,10 @@
 @container-opacity: 0.95;
 @normal-radius: 4px;
 @normal-padding: 8px;
-.container-base {
+.wrapper-base {
   max-width: @container-max-width;
   min-width: @container-min-width;
   width: @container-normal-width;
-  opacity: @container-opacity;
 }
 .singal-line-overflow-ellipsis {
   overflow: hidden;
@@ -50,5 +49,18 @@
   .follow {
     position: sticky;
     top: 55px;
+  }
+  p::selection {
+    // background-color: transparent;
+    background-color: rgb(231, 238, 251);
+    color: #0c7ed9;
+  }
+  p::-moz-selection {
+    background: #ccc;
+    color: #0c7ed9;
+  }
+  p::-webkit-selection {
+    background: #ccc;
+    color: #0c7ed9;
   }
 }

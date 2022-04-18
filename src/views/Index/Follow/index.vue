@@ -1,6 +1,6 @@
 <template>
   <div class="follow">
-    <p>我的关注</p>
+    <p class="follow-me">我的关注</p>
     <nav class="follow-list">
       <FollowItem />
       <FollowItem />
@@ -26,7 +26,13 @@ export default {
   height: 500px;
   padding: @normal-padding;
   border-radius: @normal-radius;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
-  background: rgba(255, 255, 255, 0.5)
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.7);
+
+  .follow-me {
+    font-size: 16px;
+    color: #303133;
+    font-weight: 600;
+  }
 }
 </style>

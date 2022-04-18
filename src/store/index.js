@@ -5,14 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    navIndex: 0
+    choosedNav: Number( localStorage.getItem('choosedNav') ) || 0
   },
   mutations: {
-    CHANGENAVINDEX() {
-
+    CHANGECHOOSENAV(state, index) {
+      state.choosedNav = index;
+      localStorage.setItem('choosedNav', index)
     }
   },
   actions: {
+    changeChoosedNav(content, index) {
+      content.commit("CHANGECHOOSENAV", index);
+    }
   },
   modules: {
   }
