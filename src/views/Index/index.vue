@@ -7,6 +7,8 @@
         <MainPostItem />
         <MainPostItem />
         <MainPostItem />
+        <MainPostItem />
+        <MainPostItem />
       </div>
       <Follow />
     </div>
@@ -38,7 +40,6 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 1500px;
 
     .main {
       flex: 1;

@@ -1,10 +1,12 @@
 <template>
   <div class="main-post-item">
+    <!-- 用户头像/昵称/发表时间信息 -->
     <div class="author-info">
       <div class="avatar" :style="handleAvatarImage()"></div>
       <div class="author-name">无名氏</div>
       <div class="post-time">2022年4月18日16:16</div>
     </div>
+    <!-- 主题内容 -->
     <div class="post-content">
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi nemo
@@ -25,12 +27,42 @@
         blanditiis fuga et quidem autem reiciendis!
       </p>
     </div>
+    <!-- 点赞和评论按钮 -->
+    <div class="operations">
+      <div class="like" @click="handleLike" :class="{ 'is-like': isLike }">
+        <el-badge :value="likeValue" :max="99" class="item">
+          <i class="iconfont icon-good-filling"></i>
+        </el-badge>
+      </div>
+      <div
+        class="comment"
+        @click="handleComment"
+        :class="{ 'is-comment': isComment }"
+      >
+        <el-badge :value="commentValue" :max="99" class="item">
+          <i class="iconfont icon-pinglun"></i>
+        </el-badge>
+      </div>
+    </div>
+    <!-- 评论详情 -->
+    <div class="comment-detail">
+      <el-divider content-position="center">评论详情</el-divider>
+      test
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "MainPostItem",
+  data() {
+    return {
+      isLike: false,
+      likeValue: 0,
+      isComment: false,
+      commentValue: 0,
+    };
+  },
   props: {
     avatar: {
       type: String,
@@ -42,6 +74,14 @@ export default {
       return {
         backgroundImage: `url(${this.avatar})`,
       };
+    },
+    handleLike() {
+      this.isLike = !this.isLike;
+      if (this.isLike) this.likeValue++;
+      else this.likeValue--;
+    },
+    handleComment() {
+      this.isComment = !this.isComment;
     },
   },
 };
@@ -105,6 +145,38 @@ export default {
   .post-content {
     margin-top: 20px;
     line-height: 1.3em;
+  }
+
+  .operations {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+    height: 45px;
+    // background-color: #f7f7f7;
+
+    .like,
+    .comment {
+      &:hover {
+        cursor: pointer;
+      }
+
+      i {
+        color: #555767;
+        font-size: 26px;
+        transition: all 0.2s;
+      }
+    }
+    .is-like,
+    .is-comment {
+      i {
+        color: #fd99a0;
+      }
+    }
+  }
+
+  .comment-detail {
+    height: 500px;
   }
 }
 </style>

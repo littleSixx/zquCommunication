@@ -1,0 +1,23 @@
+{
+  "id": "3345634",
+  "name": "zqu",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1240750",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "2954833",
+      "name": "good-filling",
+      "font_class": "good-filling",
+      "unicode": "e866",
+      "unicode_decimal": 59494
+    }
+  ]
+}

@@ -23,6 +23,7 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    //之后height记得删掉
     height: 1500px;
 
     .main {

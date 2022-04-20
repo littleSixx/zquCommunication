@@ -2,11 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Input, Select, Option, Button } from 'element-ui'
+import { Input, Select, Option, Button, Backtop, Badge, divider } from 'element-ui'
 Vue.use(Input);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Button);
+Vue.use(Backtop);
+Vue.use(Badge);
+Vue.use(divider);
 
 import Navigate from './components/Navigate/'
 import HeadBar from './components/HeadBar/'
