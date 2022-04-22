@@ -6,8 +6,8 @@
       <div class="author-name">无名氏</div>
       <div class="post-time">2022年4月18日16:16</div>
     </div>
-    <!-- 主题内容 -->
-    <div class="post-content">
+    <!-- 主题内容 ，"enterPostDetail(postId)中的postId由父组件v-for遍历的时候通过props传过来-->
+    <div class="post-content" @click="enterPostDetail()">
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi nemo
         deserunt vel tenetur fugiat sint expedita blanditiis vero, numquam ea
@@ -45,7 +45,7 @@
       </div>
     </div>
     <!-- 评论详情 -->
-    <div class="comment-detail">
+    <div class="comment-detail" v-if="isComment">
       <el-divider content-position="center">评论详情</el-divider>
       test
     </div>
@@ -60,7 +60,7 @@ export default {
       isLike: false,
       likeValue: 0,
       isComment: false,
-      commentValue: 0,
+      commentValue: 0
     };
   },
   props: {
@@ -83,6 +83,16 @@ export default {
     handleComment() {
       this.isComment = !this.isComment;
     },
+    enterPostDetail(postId) {
+      postId = 12345
+      // console.log(postId)
+      postId
+      // this.$router.push(`/postDetail/${postId}`)
+      this.$router.push({
+        name: "postDetail",
+        params: {postId: postId || undefined}
+      })
+    }
   },
 };
 </script>
@@ -145,6 +155,10 @@ export default {
   .post-content {
     margin-top: 20px;
     line-height: 1.3em;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .operations {
@@ -166,11 +180,14 @@ export default {
         font-size: 26px;
         transition: all 0.2s;
       }
+      i:hover {
+        color: #909399;
+      }
     }
     .is-like,
     .is-comment {
       i {
-        color: #fd99a0;
+        color: #fd99a0 !important;
       }
     }
   }

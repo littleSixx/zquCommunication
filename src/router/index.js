@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 let Index = () => import('@/views/Index/')
 let LostAndFound = () => import('@/views/LostAndFound/')
+let postDetail = () => import('@/views/PostDetail/')
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ const routes = [
     path: '/lost-and-found',
     name: 'LostAndFound',
     component: LostAndFound
+  },
+  {
+    path: '/postDetail/:postId', 
+    name: 'postDetail',
+    component: postDetail
   }
 ]
 
