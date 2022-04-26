@@ -2,14 +2,22 @@
   <div class="lost-and-found">
     <div class="container">
       <!-- <Navigate /> -->
-      <div class="main"></div>
+      <div class="main">
+        <LostAndFoundItem />
+        <LostAndFoundItem />
+        <LostAndFoundItem />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import LostAndFoundItem from "@/components/LostAndFoundItem/"
 export default {
   name: "LostAndFound",
+  components: {
+    LostAndFoundItem
+  }
 };
 </script>
 
@@ -24,20 +32,16 @@ export default {
     justify-content: space-between;
     width: 100%;
     //之后height记得删掉
-    height: 1500px;
+    // height: 1500px;
 
     .main {
       flex: 1;
       margin:0 @normal-padding;
       // margin-left: 8px;
       min-width: 360px;
-      border-radius: @normal-radius;
-      background: rgba(255, 255, 255, 0.75);
       transition: all 0.3s;
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.85);
-      }
+      
     }
   }
 }

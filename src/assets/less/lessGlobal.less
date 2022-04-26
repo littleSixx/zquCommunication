@@ -4,6 +4,8 @@
 @container-opacity: 0.95;
 @normal-radius: 4px;
 @normal-padding: 8px;
+@pad-max-width: 992px;
+@mobile-max-width: 728px;
 .wrapper-base {
   max-width: @container-max-width;
   min-width: @container-min-width;
@@ -29,7 +31,7 @@
   //   margin-right: 8px!important;
   // }
 }
-@media screen and (max-width: 728px) {
+@media screen and (max-width: @mobile-max-width) {
   .navigate {
     display: none;
   }
@@ -59,11 +61,11 @@
     color: #0c7ed9;
   }
   p::-moz-selection {
-    background: #ccc;
+    background-color: rgb(231, 238, 251);
     color: #0c7ed9;
   }
   p::-webkit-selection {
-    background: #ccc;
+    background-color: rgb(231, 238, 251);
     color: #0c7ed9;
   }
 }

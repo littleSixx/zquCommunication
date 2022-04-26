@@ -2,6 +2,11 @@
   box-sizing: border-box;
   font-size: 16px;
 }
+h1 {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 16px;
+}
 
 /* 修改滚动条样式 */
 ::-webkit-scrollbar {

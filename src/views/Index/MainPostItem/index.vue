@@ -35,6 +35,15 @@
         </el-badge>
       </div>
       <div
+        class="collect"
+        @click="handleCollect"
+        :class="{ 'is-collect': isCollect }"
+      >
+        <el-badge :value="collectValue" :max="99" class="item">
+          <i class="iconfont icon-shoucangxiao"></i>
+        </el-badge>
+      </div>
+      <div
         class="comment"
         @click="handleComment"
         :class="{ 'is-comment': isComment }"
@@ -60,7 +69,9 @@ export default {
       isLike: false,
       likeValue: 0,
       isComment: false,
-      commentValue: 0
+      commentValue: 0,
+      isCollect: false,
+      collectValue: 0,
     };
   },
   props: {
@@ -80,19 +91,24 @@ export default {
       if (this.isLike) this.likeValue++;
       else this.likeValue--;
     },
+    handleCollect() {
+      this.isCollect = !this.isCollect;
+      if (this.isCollect) this.collectValue++;
+      else this.collectValue--;
+    },
     handleComment() {
       this.isComment = !this.isComment;
     },
     enterPostDetail(postId) {
-      postId = 12345
+      postId = 12345;
       // console.log(postId)
-      postId
+      postId;
       // this.$router.push(`/postDetail/${postId}`)
       this.$router.push({
         name: "postDetail",
-        params: {postId: postId || undefined}
-      })
-    }
+        params: { postId: postId || undefined },
+      });
+    },
   },
 };
 </script>
@@ -170,7 +186,8 @@ export default {
     // background-color: #f7f7f7;
 
     .like,
-    .comment {
+    .comment,
+    .collect {
       &:hover {
         cursor: pointer;
       }
@@ -185,7 +202,8 @@ export default {
       }
     }
     .is-like,
-    .is-comment {
+    .is-comment,
+    .is-collect {
       i {
         color: #fd99a0 !important;
       }

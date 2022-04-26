@@ -43,7 +43,7 @@ export default {
   // background: rgba(25, 25, 255, 0.1);
 
   &:hover {
-    background-color: #dcdcdc;
+    background: rgba(0, 0, 0, 0.08);
   }
   .avatar {
     width: 40px;

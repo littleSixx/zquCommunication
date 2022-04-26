@@ -24,33 +24,33 @@
         :choosedIndex="choosedIndex"
         pathTo="/index"
         :navIndex="0"
-        ><a slot="nav-item-content">首 页</a></NavItem
+        ><a slot="nav-item-content"><i class="iconfont icon-fly"></i>首 页</a></NavItem
       >
       <NavItem
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         pathTo="/lost-and-found"
         :navIndex="1"
-        ><a slot="nav-item-content">失物招领</a></NavItem
+        ><a slot="nav-item-content"><i class="iconfont icon-find"></i>失物招领</a></NavItem
       >
       <NavItem
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         :navIndex="2"
-        ><a slot="nav-item-content">我的关注</a></NavItem
+        ><a slot="nav-item-content"><i class="iconfont icon-icon_followed"></i>我的关注</a></NavItem
       >
       <NavItem
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         :navIndex="3"
-        ><a slot="nav-item-content">我的信息</a></NavItem
+        ><a slot="nav-item-content"><i class="iconfont icon-fly"></i>我的信息</a></NavItem
       >
 
       <div class="tracker" ref="tracker"></div>
     </nav>
-
-    <div class="my-info-item">
-      <div class="my-info-tracker"></div>
+    <!-- 我要发布item -->
+    <div class="i-post">
+      <div class="i-post-item"><span><i class="iconfont icon-post"></i>我要发布</span></div>
     </div>
   </div>
 </template>
@@ -106,7 +106,7 @@ export default {
     border-radius: @normal-radius;
     overflow: hidden; //创建bfc
     // padding: 1px 0;//取消上下margin折叠
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.35);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.7);
 
     .tracker {
@@ -123,28 +123,46 @@ export default {
     }
   }
 
-  // .my-info-item {
-  //   position: relative;
-  //   width: 242px;
-  //   height: 45px;
-  //   background: rgba(255, 255, 255, 0.7);
-  //   border-radius: 45px;
-  //   margin-top: calc(@normal-radius*3);
-  //   z-index: -1;
+  .i-post {
+    position: relative;
+    width: 242px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 45px;
+    margin-top: calc(@normal-radius*3);
+    font-weight: 400;
+    cursor: pointer;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    // z-index: -1;
 
-  //   .my-info-tracker {
-  //     position: absolute;
-  //     top: 5px;
-  //     bottom: 0;
-  //     width: 60%;
-  //     height: 35px;
-  //     left: 50%;
-  //     transform: translateX(-50%);
-  //     border-radius: 35px;
-  //     z-index: -1;
-  //     background-color: #0c7ed9;
-  //     transition: all 0.2s ease-in-out;
-  //   }
-  // }
+    .i-post-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 5px;
+      bottom: 0;
+      width: 60%;
+      height: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 35px;
+      // z-index: -1;
+      color: #0c7ed9;
+      // background-color: #dee4ea;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      span {
+        font-size: 20px;
+        letter-spacing: 2px;
+        .iconfont {
+          font-size: 20px;
+        }
+      }
+      
+    }
+  }
 }
 </style>

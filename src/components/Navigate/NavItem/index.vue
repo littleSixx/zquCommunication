@@ -9,7 +9,11 @@
       :value="this.navIndex"
       :ref="'nav' + navIndex"
     />
-    <div class="nav-item-content" ref="navItemContent">
+    <div
+      class="nav-item-content"
+      :class="{ 'nav-item-content-hover': choosedIndex !== navIndex }"
+      ref="navItemContent"
+    >
       <slot name="nav-item-content"></slot>
     </div>
   </label>
@@ -69,10 +73,6 @@ export default {
   cursor: pointer;
   z-index: 2;
 
-  // &:hover .nav-item-content {
-  //   background-image: linear-gradient(to right, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
-  //   background-color: #f0f0f0;
-  // }
   .input {
     height: 0;
     width: 0;
@@ -82,6 +82,10 @@ export default {
     color: #ffffff;
   }
 
+  .nav-item-content-hover:hover {
+    //当没有选中当前item时,添加鼠标hover背景颜色改变
+    background: rgba(0, 0, 0, 0.08);
+  }
   .nav-item-content {
     display: inline-block;
     width: 100%;
@@ -90,6 +94,7 @@ export default {
     text-align: center;
     border-radius: 35px;
     background: transparent;
+    transition: all 0.3s;
     // background-color: antiquewhite;
 
     a {
@@ -99,6 +104,10 @@ export default {
       font-weight: 400;
       line-height: 30px;
       transition: all 0.3s ease-in-out;
+
+      .iconfont {
+        font-size: 20px;
+      }
     }
   }
 }

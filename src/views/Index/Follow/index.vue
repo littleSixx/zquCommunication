@@ -26,7 +26,8 @@ export default {
   height: 500px;
   padding: @normal-padding;
   border-radius: @normal-radius;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.35);
+  // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   background: rgba(255, 255, 255, 0.7);
 
   .follow-me {

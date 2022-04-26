@@ -147,6 +147,11 @@
           ></i
         ></el-badge>
       </div>
+      <div class="collect">
+        <el-badge :value="collectValue" :max="99" class="item"
+          ><i class="iconfont icon-shoucangxiao" :class="{ 'is-collect': isCollect }"></i
+        ></el-badge>
+      </div>
     </div>
   </div>
 </template>
@@ -158,6 +163,8 @@ export default {
     return {
       likeValue: 0,
       isLike: false,
+      collectValue: 0,
+      isCollect: false
     };
   },
   methods: {
@@ -173,6 +180,7 @@ export default {
 <style lang="less" scoped>
 .post-detail {
   padding-left: 62px;
+  padding-right: @normal-padding;
   margin-left: -54px; //用于放置点赞等按钮
 
   .container {
@@ -180,24 +188,44 @@ export default {
     border-radius: @normal-radius;
     background: rgba(255, 255, 255, 0.85);
     padding: calc(@normal-padding*3) calc(@normal-padding*7);
+    @media (max-width: @pad-max-width) {
+      padding: calc(@normal-padding*3) calc(@normal-padding*3);;
+    }
+    @media (max-width: @mobile-max-width) {
+      padding: calc(@normal-padding*3) calc(@normal-padding);;
+    }
 
     .main {
     }
   }
 
   .operations {
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     position: sticky;
-    bottom: 240px;
+    width: 50px;
+    bottom: 150px;
     margin-left: -54px;
+    
+    @media (max-width: @mobile-max-width) {
+      width: 100%;
+      bottom: 50px;
+      margin-left: 0px;
+      .like, .collect {
+        margin-right: 24px;
+      }
+    }
 
-    .like {
+    .like, .collect {
       display: flex;
       justify-content: center;
       align-items: center;
 
       width: 42px;
       height: 42px;
+      margin-bottom: 10px;
       border-radius: 50%;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       background-color: #ffffff;
