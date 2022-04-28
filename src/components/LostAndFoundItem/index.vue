@@ -5,10 +5,13 @@
     </div>
     <div class="description">
       <h1>校园卡</h1>
-      <div class="find-time"><span>发现时间：</span></div>
-      <div class="find-site"><span>发现地点：</span></div>
-      <div class="find-num"><span>数量：</span></div>
-      <div class="find-des"><span>描述：</span></div>
+      <div class="find-time"><span>发现时间：</span>2022年4月26日13:30</div>
+      <div class="find-site"><span>发现地点：</span>四饭三楼</div>
+      <div class="find-num"><span>数量：</span>1</div>
+      <div class="find-des">
+        <span>描述：</span
+        >没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +38,7 @@ export default {
   background: rgba(255, 255, 255, 0.75);
   transition: all 0.3s;
   &:hover {
-    cursor:pointer;
+    cursor: pointer;
     background: rgba(255, 255, 255, 0.85);
   }
 
@@ -57,6 +60,7 @@ export default {
   .description {
     flex: 1;
     height: 200px;
+    color: #606266;
     // background: rgba(255, 255, 255, 0.85);
 
     @media (max-width: @pad-max-width) {
@@ -75,7 +79,10 @@ export default {
       font-weight: 600;
       color: #303133;
     }
-    .find-time, .find-site, .find-num, .find-des {
+    .find-time,
+    .find-site,
+    .find-num,
+    .find-des {
       margin-bottom: 5px;
       span {
         display: inline-block;
@@ -83,9 +90,15 @@ export default {
         color: #606266;
         font-weight: 600;
         text-align: right;
-        @media (max-width:@pad-max-width) {
-
+        @media (max-width: @pad-max-width) {
         }
+      }
+    }
+    .find-des {
+      display: flex;
+      span {
+        width: 80px;
+        flex-shrink: 0;
       }
     }
   }

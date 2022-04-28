@@ -1,6 +1,6 @@
 <template>
   <div class="follow-item">
-    <div class="avatar" :style="handleAvatar()"></div>
+    <el-avatar class="avatar" :style="handleAvatar()"></el-avatar>
     <div class="follow-user-info">
       <div class="follow-user-name">无名氏</div>
       <div class="follow-user-intro">

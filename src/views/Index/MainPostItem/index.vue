@@ -2,7 +2,7 @@
   <div class="main-post-item">
     <!-- 用户头像/昵称/发表时间信息 -->
     <div class="author-info">
-      <div class="avatar" :style="handleAvatarImage()"></div>
+      <el-avatar class="avatar" :src="avatar"></el-avatar>
       <div class="author-name">无名氏</div>
       <div class="post-time">2022年4月18日16:16</div>
     </div>
@@ -170,10 +170,28 @@ export default {
 
   .post-content {
     margin-top: 20px;
-    line-height: 1.3em;
+    // line-height: 1.3em;
 
     &:hover {
       cursor: pointer;
+    }
+    p {
+      position: relative;
+      line-height: 1.4em;
+      height: 5.6em;
+      overflow: hidden;
+      &::after {
+        content: "更多";
+        font-weight: bold;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 20px 1px 45px;
+        color: #0c7ed9;
+        // background: url("/images/default_avatar.png") repeat-y;
+        // background-image: linear-gradient(to right, rgba(79, 172, 254, 0.5) 0%, #00f2fe 100%);
+        background-color: rgba(255, 255, 255, 1);
+      }
     }
   }
 

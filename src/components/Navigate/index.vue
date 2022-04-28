@@ -24,34 +24,63 @@
         :choosedIndex="choosedIndex"
         pathTo="/index"
         :navIndex="0"
-        ><a slot="nav-item-content"><i class="iconfont icon-fly"></i>首 页</a></NavItem
+        ><a slot="nav-item-content"
+          ><i class="iconfont icon-fly"></i>首 页</a
+        ></NavItem
       >
       <NavItem
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         pathTo="/lost-and-found"
         :navIndex="1"
-        ><a slot="nav-item-content"><i class="iconfont icon-find"></i>失物招领</a></NavItem
+        ><a slot="nav-item-content"
+          ><i class="iconfont icon-find"></i>失物招领</a
+        ></NavItem
       >
       <NavItem
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         :navIndex="2"
-        ><a slot="nav-item-content"><i class="iconfont icon-icon_followed"></i>我的关注</a></NavItem
+        ><a slot="nav-item-content"
+          ><i class="iconfont icon-icon_followed"></i>我的关注</a
+        ></NavItem
       >
       <NavItem
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         :navIndex="3"
-        ><a slot="nav-item-content"><i class="iconfont icon-fly"></i>我的信息</a></NavItem
+        ><a slot="nav-item-content"
+          ><i class="iconfont icon-fly"></i>我的信息</a
+        ></NavItem
       >
 
       <div class="tracker" ref="tracker"></div>
     </nav>
     <!-- 我要发布item -->
-    <div class="i-post">
-      <div class="i-post-item"><span><i class="iconfont icon-post"></i>我要发布</span></div>
+    <div class="i-post" @click="iPostBtnClick">
+      <div class="i-post-item">
+        <span><i class="iconfont icon-post"></i>我要发布</span>
+      </div>
     </div>
+    <!-- 选择发布类型弹出框 -->
+    <el-dialog
+      :center="true"
+      :append-to-body="true"
+      title="请选择发布类型"
+      :visible.sync="dialogVisible"
+      width="320px"
+    >
+      <el-radio-group v-model="radio">
+        <el-radio :label="0">帖子</el-radio>
+        <el-radio :label="1">失物招领</el-radio>
+      </el-radio-group>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -67,6 +96,8 @@ export default {
     return {
       input3: "",
       select: "",
+      dialogVisible: false,
+      radio: 1
     };
   },
   mounted() {
@@ -76,6 +107,9 @@ export default {
     changeTracker() {
       //用于导航栏圆角边框背景的移动
       this.$refs.tracker.style.top = 20 + this.choosedIndex * 60 + "px";
+    },
+    iPostBtnClick() {
+      this.dialogVisible = !this.dialogVisible;
     },
   },
   computed: mapState({
@@ -161,7 +195,6 @@ export default {
           font-size: 20px;
         }
       }
-      
     }
   }
 }
