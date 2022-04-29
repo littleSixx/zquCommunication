@@ -8,7 +8,7 @@
     </div>
     <!-- 主题内容 ，"enterPostDetail(postId)中的postId由父组件v-for遍历的时候通过props传过来-->
     <div class="post-content" @click="enterPostDetail()">
-      <p>
+      <p class="selection-style">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi nemo
         deserunt vel tenetur fugiat sint expedita blanditiis vero, numquam ea
         iure eum. Vel recusandae dolore officiis laudantium, delectus
@@ -181,7 +181,7 @@ export default {
       height: 5.6em;
       overflow: hidden;
       &::after {
-        content: "更多";
+        content: "...查看详情";
         font-weight: bold;
         position: absolute;
         bottom: 0;

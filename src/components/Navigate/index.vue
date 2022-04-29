@@ -50,7 +50,7 @@
         :choosedIndex="choosedIndex"
         :navIndex="3"
         ><a slot="nav-item-content"
-          ><i class="iconfont icon-fly"></i>我的信息</a
+          ><i class="iconfont icon-home"></i>我的信息</a
         ></NavItem
       >
 
@@ -58,8 +58,20 @@
     </nav>
     <!-- 我要发布item -->
     <div class="i-post" @click="iPostBtnClick">
+      <!-- <NavItem
+        @click.native="changeTracker"
+        :choosedIndex="choosedIndex"
+        :navIndex="-1"
+        ><a slot="nav-item-content"
+          ><i class="iconfont icon-fly"></i>我要发布</a
+        ></NavItem
+      > -->
+
       <div class="i-post-item">
-        <span><i class="iconfont icon-post"></i>我要发布</span>
+        <span for="i-post-input">
+          <!-- 用于实现选中更改样式功能 -->
+          <i class="iconfont icon-post"></i>我要发布
+        </span>
       </div>
     </div>
     <!-- 选择发布类型弹出框 -->
@@ -76,9 +88,7 @@
       </el-radio-group>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="comfirmBtnClick">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -97,7 +107,7 @@ export default {
       input3: "",
       select: "",
       dialogVisible: false,
-      radio: 1
+      radio: 0,
     };
   },
   mounted() {
@@ -110,6 +120,14 @@ export default {
     },
     iPostBtnClick() {
       this.dialogVisible = !this.dialogVisible;
+    },
+    comfirmBtnClick() {
+      this.dialogVisible = false; //关闭对话框
+      this.radio === 0
+        ? this.$router.push("/post-edit")
+        : this.$router.push("/lost-and-found/edit");
+      this.$store.dispatch("changeChoosedNav", -1);
+      // this.changeTracker();
     },
   },
   computed: mapState({
@@ -169,6 +187,18 @@ export default {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     // z-index: -1;
 
+    // label {
+    //   display: inline-block;
+    //   font-size: 20px;
+    //   letter-spacing: 2px;
+    //   cursor: pointer;
+    //   .iconfont {
+    //     font-size: 20px;
+    //   }
+    //   .input {
+    //     display: none;
+    //   }
+    // }
     .i-post-item {
       display: flex;
       justify-content: center;
@@ -189,10 +219,15 @@ export default {
         background: rgba(0, 0, 0, 0.08);
       }
       span {
+        display: inline-block;
         font-size: 20px;
         letter-spacing: 2px;
+        cursor: pointer;
         .iconfont {
           font-size: 20px;
+        }
+        .input {
+          display: none;
         }
       }
     }
