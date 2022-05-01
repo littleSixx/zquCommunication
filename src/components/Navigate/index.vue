@@ -103,12 +103,12 @@ export default {
     iPostBtnClick() {
       this.dialogVisible = !this.dialogVisible;
     },
-    comfirmBtnClick() {//发布类型选择对话框，点击确认按钮的事件
+    comfirmBtnClick() {
       this.dialogVisible = false; //关闭对话框
       this.radio === 0
         ? this.$router.push("/post-edit")
         : this.$router.push("/lost-and-found/edit");
-      this.$store.dispatch("changeChoosedNav", -1);
+      // this.$store.dispatch("changeChoosedNav", -1);
       // this.changeTracker();
     },
   },

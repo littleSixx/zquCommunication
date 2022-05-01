@@ -60,11 +60,7 @@ export default {
       margin: 0 @normal-padding;
       // min-width: 360px;
       border-radius: @normal-radius;
-
       transition: all 0.3s;
-
-      &:hover {
-      }
     }
   }
 }

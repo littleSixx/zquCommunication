@@ -32,40 +32,22 @@
     >
       <!-- <span>我来啦!</span> -->
       <nav class="nav-content">
-        <NavItem
-          :navName="navName"
-          @click.native="changeTracker"
-          :choosedIndex="choosedIndex"
-          pathTo="/index"
-          :navIndex="0"
+        <NavItem :navName="navName" pathTo="/index" :navIndex="0"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-fly"></i>首 页</a
           ></NavItem
         >
-        <NavItem
-          :navName="navName"
-          @click.native="changeTracker"
-          :choosedIndex="choosedIndex"
-          pathTo="/lost-and-found"
-          :navIndex="1"
+        <NavItem :navName="navName" pathTo="/lost-and-found" :navIndex="1"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-find"></i>失物招领</a
           ></NavItem
         >
-        <NavItem
-          :navName="navName"
-          @click.native="changeTracker"
-          :choosedIndex="choosedIndex"
-          :navIndex="2"
+        <NavItem :navName="navName" :navIndex="2"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-icon_followed"></i>我的关注</a
           ></NavItem
         >
-        <NavItem
-          :navName="navName"
-          @click.native="changeTracker"
-          :choosedIndex="choosedIndex"
-          :navIndex="3"
+        <NavItem :navName="navName" :navIndex="3"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-home"></i>我的信息</a
           ></NavItem
@@ -111,6 +93,7 @@
 <script>
 import NavItem from "../Navigate/NavItem/";
 import { mapState } from "vuex";
+import { changeTracker } from "@/utils/myUtils";
 export default {
   name: "MobileNavigate",
   components: {
@@ -127,19 +110,13 @@ export default {
       radio: 0,
     };
   },
-  mounted() {
-    // this.changeTracker(); //网页刷新后通过获取本地存储恢复定位
-  },
+  mounted() {},
   methods: {
     handleNavDrawer() {
       this.drawer = true;
       this.$nextTick(() => {
-        this.changeTracker();
+        changeTracker(this.$refs.tracker, this.choosedIndex);
       }); //当点击弹出导航栏时，tracker进行移动
-    },
-    changeTracker() {
-      //用于导航栏圆角边框背景的移动
-      this.$refs.tracker.style.top = 20 + this.choosedIndex * 60 + "px";
     },
     iPostBtnClick() {
       this.dialogVisible = !this.dialogVisible;
@@ -149,12 +126,20 @@ export default {
       this.radio === 0
         ? this.$router.push("/post-edit")
         : this.$router.push("/lost-and-found/edit");
-      // this.$store.dispatch("changeChoosedNav", -1);
     },
   },
   computed: mapState({
     choosedIndex: (state) => state.choosedNav,
   }),
+  watch: {
+    choosedIndex: {
+      //监听当前选择的导航，导航改变时也改变tracker的位置
+      // immediate: true,//不知道为什么写这个会报错
+      handler() {
+        changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
+      },
+    },
+  },
 };
 </script>
 
