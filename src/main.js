@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+// import requests from "@/network/request.js"
 import {
   Input,
   Select,
@@ -21,7 +22,8 @@ import {
   Col,
   DatePicker,
   TimePicker,
-  Progress
+  Progress,
+  Drawer
 } from "element-ui";
 Vue.use(Input);
 Vue.use(Select);
@@ -42,11 +44,14 @@ Vue.use(Col);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
 Vue.use(Progress);
+Vue.use(Drawer);
 
 import Navigate from "./components/Navigate/";
+import MobileNavigate from "./components/MobileNavigate/";
 import HeadBar from "./components/HeadBar/";
 
 Vue.component(Navigate.name, Navigate);
+Vue.component(MobileNavigate.name, MobileNavigate);
 Vue.component(HeadBar.name, HeadBar);
 
 Vue.config.productionTip = false;

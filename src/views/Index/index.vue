@@ -17,13 +17,23 @@
 
 <script>
 import Follow from "@/views/Index/Follow/";
-import MainPostItem from "@/views/Index/MainPostItem/"
+import MainPostItem from "@/views/Index/MainPostItem/";
+
 
 export default {
   name: "Index",
   components: {
     Follow,
-    MainPostItem
+    MainPostItem,
+  },
+  data() {
+    return {
+      pageSize: 2,
+      pageNum: 1
+    }
+  },
+  created() {
+    this.$store.dispatch("getIndexPostItem", this.pageSize, this.pageNum)
   },
   mounted() {},
   methods: {},
@@ -46,15 +56,12 @@ export default {
       margin: 0 @normal-padding;
       // min-width: 360px;
       border-radius: @normal-radius;
-      
+
       transition: all 0.3s;
 
       &:hover {
-        
       }
     }
-
-    
   }
 }
 </style>

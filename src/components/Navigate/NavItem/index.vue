@@ -1,9 +1,9 @@
 <template>
-  <label class="nav-item" @click="handlePathTo" :for="navIndex" ref="navItem">
+  <label class="nav-item" @click="handlePathTo" :for="inputId" ref="navItem">
     <!-- 用于实现选中更改样式功能 -->
     <input
       class="input"
-      :id="navIndex"
+      :id="inputId"
       name="nav"
       type="radio"
       :value="this.navIndex"
@@ -23,6 +23,10 @@
 export default {
   name: "NavItem",
   props: {
+    navName: {
+      type: String,
+      required: true
+    },
     pathTo: {
       type: String,
       default: "/index",
@@ -55,7 +59,11 @@ export default {
       }
     },
   },
-  computed: {},
+  computed: {
+    inputId() {
+      return this.navIndex + this.navName
+    }
+  },
 };
 </script>
 
@@ -76,7 +84,7 @@ export default {
   .input {
     height: 0;
     width: 0;
-    // display: none;
+    display: none;
   }
   .input:checked + .nav-item-content a {
     color: #ffffff;

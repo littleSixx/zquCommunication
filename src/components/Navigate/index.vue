@@ -20,6 +20,7 @@
 
     <nav class="nav-content">
       <NavItem
+        :navName="navName"
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         pathTo="/index"
@@ -29,6 +30,7 @@
         ></NavItem
       >
       <NavItem
+        :navName="navName"
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         pathTo="/lost-and-found"
@@ -38,6 +40,7 @@
         ></NavItem
       >
       <NavItem
+        :navName="navName"
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         :navIndex="2"
@@ -46,6 +49,7 @@
         ></NavItem
       >
       <NavItem
+        :navName="navName"
         @click.native="changeTracker"
         :choosedIndex="choosedIndex"
         :navIndex="3"
@@ -108,6 +112,7 @@ export default {
       select: "",
       dialogVisible: false,
       radio: 0,
+      navName: "asideNav", //重要，因为是使用label+input的形式控制样式，而label是通过input的id和input绑定的。由于id不能重复，这就导致了有多个导航栏时(pc, mobile)会导致input的id冲突
     };
   },
   mounted() {

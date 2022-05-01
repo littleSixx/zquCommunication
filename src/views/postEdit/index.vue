@@ -1,0 +1,80 @@
+<template>
+  <div class="post-edit">
+    <div style="border: 1px solid #ccc">
+      <Toolbar
+        style="border-bottom: 1px solid #ccc"
+        :editor="wangEditor.editor"
+        :defaultConfig="wangEditor.toolbarConfig"
+        :mode="wangEditor.mode"
+      />
+      <Editor
+        style="height: 500px; overflow-y: hidden"
+        v-model="wangEditor.html"
+        :defaultConfig="wangEditor.editorConfig"
+        :mode="wangEditor.mode"
+        @onCreated="onCreated"
+      />
+    </div>
+    <button @click="btnClick">提交</button>
+  </div>
+</template>
+
+<script>
+import "@wangeditor/editor/dist/css/style.css";
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+
+export default {
+  name: "postEdit",
+  components: { Editor, Toolbar },
+  data() {
+    return {
+      wangEditor: {
+        editor: null,
+        html: "<p>hello</p>",
+        toolbarConfig: {},
+        editorConfig: { placeholder: "请输入内容..." },
+        mode: "simple", // or 'simple'
+      },
+    };
+  },
+  methods: {
+    onCreated(editor) {
+      this.wangEditor.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
+    },
+    btnClick() {
+      console.log(this.wangEditor.editor.getHtml())
+    }
+  },
+  mounted() {
+    // 模拟 ajax 请求，异步渲染编辑器
+    setTimeout(() => {
+      this.html = "<p>模拟 Ajax 异步设置内容 HTML</p>";
+    }, 1500);
+  },
+  beforeDestroy() {
+    const editor = this.wangEditor.editor;
+    if (editor == null) return;
+    editor.destroy(); // 组件销毁时，及时销毁编辑器
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.post-edit {
+  display: flex;
+  justify-content: center;
+  min-height: 500px;
+  padding: @normal-padding*3 @normal-padding*2;
+  margin-left: @normal-padding;
+  margin-bottom: 50px;
+  border-radius: @normal-radius;
+  @media (max-width: @mobile-max-width) {
+    margin-left: 0;
+  }
+  margin-top: 3px;
+  color: #303133;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 24%), 0 17px 50px 0 rgba(0, 0, 0, 19%) !important;
+
+}
+</style>

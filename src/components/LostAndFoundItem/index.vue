@@ -61,6 +61,7 @@ export default {
     flex: 1;
     height: 200px;
     color: #606266;
+    overflow: hidden;
     // background: rgba(255, 255, 255, 0.85);
 
     @media (max-width: @pad-max-width) {
@@ -73,6 +74,7 @@ export default {
     }
 
     h1 {
+      margin-left: 5px;
       margin-top: 0;
       letter-spacing: 2px;
       font-size: 20px;
@@ -86,7 +88,7 @@ export default {
       margin-bottom: 5px;
       span {
         display: inline-block;
-        width: 80px;
+        width: 85px;
         color: #606266;
         font-weight: 600;
         text-align: right;
@@ -97,7 +99,7 @@ export default {
     .find-des {
       display: flex;
       span {
-        width: 80px;
+        width: 85px;
         flex-shrink: 0;
       }
     }

@@ -80,6 +80,9 @@ export default {
       default: "/images/default_avatar.png",
     },
   },
+  created() {
+    
+  },
   methods: {
     handleAvatarImage() {
       return {

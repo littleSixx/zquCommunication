@@ -4,6 +4,7 @@ let Index = () => import("@/views/Index/");
 let LostAndFound = () => import("@/views/LostAndFound/");
 let postDetail = () => import("@/views/PostDetail/");
 let LostAndFoundEdit = () => import("@/views/LostAndFoundEdit/");
+let postEdit = () => import("@/views/postEdit/");
 
 Vue.use(VueRouter);
 
@@ -52,11 +53,11 @@ const routes = [
     name: "postDetail",
     component: postDetail,
   },
-  // {
-  //   path: "/pos-detail/:postId",
-  //   name: "postDetail",
-  //   component: postDetail,
-  // },
+  {
+    path: "/post-edit",
+    name: "postEdit",
+    component: postEdit,
+  },
 ];
 
 const router = new VueRouter({
