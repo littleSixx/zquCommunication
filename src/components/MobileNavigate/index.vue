@@ -70,9 +70,39 @@
             ><i class="iconfont icon-home"></i>我的信息</a
           ></NavItem
         >
-
         <div class="tracker" ref="tracker"></div>
       </nav>
+
+      <!-- 我要发布item -->
+      <div class="i-post-container">
+        <div class="i-post" @click="iPostBtnClick">
+          <div class="i-post-item">
+            <span for="i-post-input">
+              <!-- 用于实现选中更改样式功能 -->
+              <i class="iconfont icon-post"></i>我要发布
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- 选择发布类型弹出框 -->
+      <el-dialog
+        :center="true"
+        :append-to-body="true"
+        title="请选择发布类型"
+        :visible.sync="dialogVisible"
+        width="320px"
+      >
+        <div class="radio-container">
+          <el-radio-group v-model="radio">
+            <el-radio :label="0">帖子</el-radio>
+            <el-radio :label="1">失物招领</el-radio>
+          </el-radio-group>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="comfirmBtnClick">确 定</el-button>
+        </span>
+      </el-dialog>
     </el-drawer>
     <!-- 选择发布类型弹出框 -->
   </div>
@@ -93,7 +123,6 @@ export default {
       drawer: false,
       navName: "mobileNav",
       //
-      input3: "",
       dialogVisible: false,
       radio: 0,
     };
@@ -120,8 +149,7 @@ export default {
       this.radio === 0
         ? this.$router.push("/post-edit")
         : this.$router.push("/lost-and-found/edit");
-      this.$store.dispatch("changeChoosedNav", -1);
-      // this.changeTracker();
+      // this.$store.dispatch("changeChoosedNav", -1);
     },
   },
   computed: mapState({
@@ -181,5 +209,58 @@ export default {
   .input:checked + .nav-item-content a {
     color: #ffffff;
   }
+}
+.i-post-container {
+  display: flex;
+  justify-content: center;
+
+  .i-post {
+    position: relative;
+    width: 242px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 45px;
+    margin-top: calc(@normal-radius*3);
+    font-weight: 400;
+    cursor: pointer;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    .i-post-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 5px;
+      bottom: 0;
+      width: 60%;
+      height: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 35px;
+      // z-index: -1;
+      color: #0c7ed9;
+      // background-color: #dee4ea;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      span {
+        display: inline-block;
+        font-size: 20px;
+        letter-spacing: 2px;
+        cursor: pointer;
+        .iconfont {
+          font-size: 20px;
+        }
+        .input {
+          display: none;
+        }
+      }
+    }
+  }
+}
+.radio-container {
+  display: flex;
+  justify-content: center;
 }
 </style>

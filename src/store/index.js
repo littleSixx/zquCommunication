@@ -22,9 +22,9 @@ export default new Vuex.Store({
     changeChoosedNav(content, index) {
       content.commit("CHANGECHOOSENAV", index);
     },
-    async getIndexPostItem(content, pageSize, pageNum) {
+    async getIndexPostItem(content, pageConfig) {
       try {
-        let result = await reqIndexPostItem(pageSize, pageNum);
+        let result = await reqIndexPostItem(pageConfig.pageSize, pageConfig.pageNum);
         console.log(result)
         if (result.status === 200) {
           content.commit("GETINDEXPOSTITEM", result.data);

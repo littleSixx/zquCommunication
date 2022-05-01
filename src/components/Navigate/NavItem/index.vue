@@ -20,12 +20,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "NavItem",
   props: {
     navName: {
       type: String,
-      required: true
+      required: true,
     },
     pathTo: {
       type: String,
@@ -34,11 +35,7 @@ export default {
     navIndex: {
       type: Number,
       required: true,
-    },
-    choosedIndex: {
-      type: Number,
-      required: true,
-    },
+    }
   },
   data() {
     return {};
@@ -47,11 +44,11 @@ export default {
     this.handleTransition();
   },
   methods: {
-    handlePathTo() {
+    handlePathTo() {//点击导航，路由跳转
       this.$router.push(this.pathTo);
       this.$store.dispatch("changeChoosedNav", this.navIndex);
     },
-    handleTransition() {
+    handleTransition() {//用于选中后文字颜色改变
       if (this.navIndex === this.choosedIndex) {
         //当前item的index等于选中的index时，即当前item被选中时，文字颜色改变
         let itemRef = "nav" + this.navIndex;
@@ -59,10 +56,20 @@ export default {
       }
     },
   },
-  computed: {
-    inputId() {
-      return this.navIndex + this.navName
-    }
+  computed: mapState({
+    choosedIndex: (state) => state.choosedNav,
+    inputId() {//inputId用于给input设置id，防止多个导航栏的input的id重复问题
+      return this.navIndex + this.navName;
+    },
+  }),
+  watch: {
+    choosedIndex: {
+      //监听当前选择的导航，导航改变时也改变文字的颜色
+      // immediate: true,
+      handler() {
+        this.handleTransition();
+      },
+    },
   },
 };
 </script>

@@ -18,6 +18,9 @@ export default {
   name: "LostAndFound",
   components: {
     LostAndFoundItem
+  },
+  created() {
+    this.$store.dispatch("changeChoosedNav", 1)
   }
 };
 </script>

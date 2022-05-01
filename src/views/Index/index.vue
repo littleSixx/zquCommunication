@@ -19,7 +19,6 @@
 import Follow from "@/views/Index/Follow/";
 import MainPostItem from "@/views/Index/MainPostItem/";
 
-
 export default {
   name: "Index",
   components: {
@@ -29,11 +28,16 @@ export default {
   data() {
     return {
       pageSize: 2,
-      pageNum: 1
-    }
+      pageNum: 1,
+    };
   },
   created() {
-    this.$store.dispatch("getIndexPostItem", this.pageSize, this.pageNum)
+    this.$store.dispatch("changeChoosedNav", 0); //进入该页面后，改变vuex中已选中的导航
+    // console.log(this.pageNum)
+    this.$store.dispatch("getIndexPostItem", {
+      pageSize: this.pageSize,
+      pageNum: this.pageNum,
+    }); //获取帖子数据
   },
   mounted() {},
   methods: {},

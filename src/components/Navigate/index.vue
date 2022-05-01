@@ -5,10 +5,10 @@
         size="small"
         clearable
         placeholder="请输入内容"
-        v-model="input3"
+        v-model="searchContent"
         class="input-with-select"
       >
-        <el-select v-model="select" slot="prepend" placeholder="请选择">
+        <el-select v-model="searchSelect" slot="prepend" placeholder="请选择">
           <el-option label="综合" value="1"></el-option>
           <el-option label="帖子" value="2"></el-option>
           <el-option label="失物招领" value="3"></el-option>
@@ -19,44 +19,24 @@
     </div>
 
     <nav class="nav-content">
-      <NavItem
-        :navName="navName"
-        @click.native="changeTracker"
-        :choosedIndex="choosedIndex"
-        pathTo="/index"
-        :navIndex="0"
-        ><a slot="nav-item-content"
-          ><i class="iconfont icon-fly"></i>首 页</a
-        ></NavItem
-      >
-      <NavItem
-        :navName="navName"
-        @click.native="changeTracker"
-        :choosedIndex="choosedIndex"
-        pathTo="/lost-and-found"
-        :navIndex="1"
-        ><a slot="nav-item-content"
+      <NavItem :navName="navName" pathTo="/index" :navIndex="0">
+        <a slot="nav-item-content"><i class="iconfont icon-fly"></i>首 页</a>
+      </NavItem>
+      <NavItem :navName="navName" pathTo="/lost-and-found" :navIndex="1">
+        <a slot="nav-item-content"
           ><i class="iconfont icon-find"></i>失物招领</a
-        ></NavItem
-      >
-      <NavItem
-        :navName="navName"
-        @click.native="changeTracker"
-        :choosedIndex="choosedIndex"
-        :navIndex="2"
-        ><a slot="nav-item-content"
+        >
+      </NavItem>
+      <NavItem :navName="navName" :navIndex="2">
+        <a slot="nav-item-content"
           ><i class="iconfont icon-icon_followed"></i>我的关注</a
-        ></NavItem
-      >
-      <NavItem
-        :navName="navName"
-        @click.native="changeTracker"
-        :choosedIndex="choosedIndex"
-        :navIndex="3"
-        ><a slot="nav-item-content"
+        >
+      </NavItem>
+      <NavItem :navName="navName" :navIndex="3">
+        <a slot="nav-item-content"
           ><i class="iconfont icon-home"></i>我的信息</a
-        ></NavItem
-      >
+        >
+      </NavItem>
 
       <div class="tracker" ref="tracker"></div>
     </nav>
@@ -100,6 +80,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { changeTracker } from "@/utils/myUtils";
 import NavItem from "./NavItem/";
 export default {
   name: "Navigate",
@@ -108,25 +89,21 @@ export default {
   },
   data() {
     return {
-      input3: "",
-      select: "",
-      dialogVisible: false,
-      radio: 0,
+      searchContent: "",//搜索内容
+      searchSelect: "",//搜索类型
+      dialogVisible: false,//发布类型对话框
+      radio: 0,//发布类型选择
       navName: "asideNav", //重要，因为是使用label+input的形式控制样式，而label是通过input的id和input绑定的。由于id不能重复，这就导致了有多个导航栏时(pc, mobile)会导致input的id冲突
     };
   },
   mounted() {
-    this.changeTracker(); //网页刷新后通过获取本地存储恢复定位
+    changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
   },
   methods: {
-    changeTracker() {
-      //用于导航栏圆角边框背景的移动
-      this.$refs.tracker.style.top = 20 + this.choosedIndex * 60 + "px";
-    },
     iPostBtnClick() {
       this.dialogVisible = !this.dialogVisible;
     },
-    comfirmBtnClick() {
+    comfirmBtnClick() {//发布类型选择对话框，点击确认按钮的事件
       this.dialogVisible = false; //关闭对话框
       this.radio === 0
         ? this.$router.push("/post-edit")
@@ -138,6 +115,15 @@ export default {
   computed: mapState({
     choosedIndex: (state) => state.choosedNav,
   }),
+  watch: {
+    choosedIndex: {
+      //监听当前选择的导航，导航改变时也改变tracker的位置
+      // immediate: true,//不知道为什么写这个会报错
+      handler() {
+        changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
+      },
+    },
+  },
 };
 </script>
 
