@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { reqIndexPostItem } from "@/network/index.js";
+import { reqIndexPostItem, reqUserRegister } from "@/network/index.js";
 
 Vue.use(Vuex);
 
@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     choosedNav: Number(localStorage.getItem("choosedNav")) || 0,
     indexPostItem: [],
+    loginUserData: {}
   },
   mutations: {
     CHANGECHOOSENAV(state, index) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     GETINDEXPOSTITEM(state, data) {
       state.indexPostItem = data;
     },
+    USERREGISTER(state, data) {
+      state.loginUserData = data
+    }
   },
   actions: {
     changeChoosedNav(content, index) {
@@ -24,14 +28,30 @@ export default new Vuex.Store({
     },
     async getIndexPostItem(content, pageConfig) {
       try {
-        let result = await reqIndexPostItem(pageConfig.pageSize, pageConfig.pageNum);
-        console.log(result)
+        let result = await reqIndexPostItem(
+          pageConfig.pageSize,
+          pageConfig.pageNum
+        );
+        console.log(result);
         if (result.status === 200) {
           content.commit("GETINDEXPOSTITEM", result.data);
-          return 'ok'
+          return "ok";
+        } else {
+          return Promise.reject(new Error("faile"));
         }
-        else {
-          return Promise.reject(new Error('faile'))
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async userRegister(content, registerData) {
+      try {
+        let result = await reqUserRegister(registerData);
+        console.log(result);
+        if (result.status === 200) {
+          content.commit("GETINDEXPOSTITEM", result.data);
+          return "ok";
+        } else {
+          return Promise.reject(new Error("faile"));
         }
       } catch (err) {
         console.log(err);

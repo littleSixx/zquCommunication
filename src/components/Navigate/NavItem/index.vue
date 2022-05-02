@@ -46,7 +46,7 @@ export default {
   methods: {
     handlePathTo() {//点击导航，路由跳转
       this.$router.push(this.pathTo);
-      this.$store.dispatch("changeChoosedNav", this.navIndex);
+      // this.$store.dispatch("changeChoosedNav", this.navIndex);
     },
     handleTransition() {//用于选中后文字颜色改变
       if (this.navIndex === this.choosedIndex) {
@@ -67,7 +67,9 @@ export default {
       //监听当前选择的导航，导航改变时也改变文字的颜色
       // immediate: true,
       handler() {
-        this.handleTransition();
+        this.$nextTick(() => {
+          this.handleTransition();
+        })
       },
     },
   },

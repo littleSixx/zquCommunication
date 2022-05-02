@@ -66,10 +66,12 @@
       :visible.sync="dialogVisible"
       width="320px"
     >
-      <el-radio-group v-model="radio">
-        <el-radio :label="0">帖子</el-radio>
-        <el-radio :label="1">失物招领</el-radio>
-      </el-radio-group>
+      <div class="radio-container">
+        <el-radio-group v-model="radio">
+          <el-radio :label="0">帖子</el-radio>
+          <el-radio :label="1">失物招领</el-radio>
+        </el-radio-group>
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="comfirmBtnClick">确 定</el-button>
@@ -89,10 +91,10 @@ export default {
   },
   data() {
     return {
-      searchContent: "",//搜索内容
-      searchSelect: "",//搜索类型
-      dialogVisible: false,//发布类型对话框
-      radio: 0,//发布类型选择
+      searchContent: "", //搜索内容
+      searchSelect: "", //搜索类型
+      dialogVisible: false, //发布类型对话框
+      radio: 0, //发布类型选择
       navName: "asideNav", //重要，因为是使用label+input的形式控制样式，而label是通过input的id和input绑定的。由于id不能重复，这就导致了有多个导航栏时(pc, mobile)会导致input的id冲突
     };
   },
@@ -223,5 +225,9 @@ export default {
       }
     }
   }
+}
+.radio-container {
+  display: flex;
+  justify-content: center;
 }
 </style>

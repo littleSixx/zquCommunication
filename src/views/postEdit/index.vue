@@ -1,6 +1,11 @@
 <template>
   <div class="post-edit">
-    <div style="border: 1px solid #ccc">
+    <el-input
+      class="title-input"
+      v-model="article.title"
+      placeholder="请输入标题"
+    />
+    <div style="">
       <Toolbar
         style="border-bottom: 1px solid #ccc"
         :editor="wangEditor.editor"
@@ -35,6 +40,9 @@ export default {
         editorConfig: { placeholder: "请输入内容..." },
         mode: "simple", // or 'simple'
       },
+      article: {
+        title: "",
+      },
     };
   },
   methods: {
@@ -42,8 +50,8 @@ export default {
       this.wangEditor.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
     },
     btnClick() {
-      console.log(this.wangEditor.editor.getHtml())
-    }
+      console.log(this.wangEditor.editor.getHtml());
+    },
   },
   mounted() {
     // 模拟 ajax 请求，异步渲染编辑器
@@ -62,6 +70,7 @@ export default {
 <style lang="less" scoped>
 .post-edit {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   min-height: 500px;
   padding: @normal-padding*3 @normal-padding*2;
@@ -76,5 +85,9 @@ export default {
   background: rgba(255, 255, 255, 0.85);
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 24%), 0 17px 50px 0 rgba(0, 0, 0, 19%) !important;
 
+  .title-input {
+    margin-bottom: @normal-padding;
+    font-size: 18px;
+  }
 }
 </style>

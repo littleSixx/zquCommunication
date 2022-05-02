@@ -1,20 +1,13 @@
 <template>
   <div class="lost-and-found-edit">
     <div class="container">
-      <el-progress
-        class="el-progress"
-        :text-inside="true"
-        :stroke-width="20"
-        :percentage="percentage"
-      ></el-progress>
+      <h1 class="title">发布失物招领</h1>
       <!-- 表单 -->
       <el-form
-        @validate="changeProgressPercentage"
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
         label-width="100px"
-        class="demo-ruleForm"
       >
         <el-form-item label="物品名称：" prop="findName">
           <el-input v-model="ruleForm.findName"></el-input>
@@ -149,8 +142,9 @@ export default {
       dialogVisible: false,
       disabled: false,
       //
-      percentage: 0,
-      ruleForm: {//表单数据
+      // percentage: 0,
+      ruleForm: {
+        //表单数据
         findName: "",
         findSite: "",
         findNum: "",
@@ -158,7 +152,8 @@ export default {
         findDate: "",
         findTime: "",
       },
-      rules: {//校验规则，每个数组名和标签中prop属性对应
+      rules: {
+        //校验规则，每个数组名和标签中prop属性对应
         //具体的校验规则还没写！！！！！！！！！！！！！！！！！！！！！！！！！！！！
         findName: [
           { required: true, message: "请输入物品名称", trigger: "blur" },
@@ -212,12 +207,13 @@ export default {
     handleDownload(file) {
       console.log(file);
     },
-    changeProgressPercentage(propVal, isValid) {//改变进度条进度
-      if (isValid) {
-        this.percentage += 5;
-      }
-    },
-    resetForm(ruleForm) {//重置表单数据
+    // changeProgressPercentage(propVal, isValid) {//改变进度条进度
+    //   if (isValid) {
+    //     this.percentage += 5;
+    //   }
+    // },
+    resetForm(ruleForm) {
+      //重置表单数据
       for (let key in ruleForm) {
         ruleForm[key] = "";
       }
@@ -229,6 +225,7 @@ export default {
 
 <style lang="less" scoped>
 .lost-and-found-edit {
+  // width: 100vh;
   display: flex;
   justify-content: center;
   height: 800px;
@@ -236,12 +233,22 @@ export default {
   margin-left: @normal-padding;
   margin-bottom: 50px;
   border-radius: @normal-radius;
-  @media (max-width: @mobile-max-width) {
-    margin-left: 0;
-  }
   margin-top: 3px;
   color: #303133;
   background: rgba(255, 255, 255, 0.85);
+  @media (max-width: @mobile-max-width) {
+    margin-left: 0;
+  }
+
+  .title {
+    margin-top: 0px;
+    margin-bottom: @normal-padding*3;
+
+    text-align: center;
+    color: #606266;
+    font-size: 26px;
+    font-weight: 600;
+  }
 
   .container {
     .el-progress {

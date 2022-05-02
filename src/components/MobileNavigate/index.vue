@@ -136,7 +136,10 @@ export default {
       //监听当前选择的导航，导航改变时也改变tracker的位置
       // immediate: true,//不知道为什么写这个会报错
       handler() {
-        changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
+        if (document.body.clientWidth <= 728) {
+          //当屏幕宽度为手机端的时候才执行下面的函数(处于手机端宽度时才会有顶部导航栏)，否则会因拿不到tracker报错
+          changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
+        }
       },
     },
   },
