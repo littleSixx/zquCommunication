@@ -47,7 +47,7 @@
             ><i class="iconfont icon-icon_followed"></i>我的关注</a
           ></NavItem
         >
-        <NavItem :navName="navName" :navIndex="3"
+        <NavItem :navName="navName" pathTo="/user" :navIndex="3"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-home"></i>我的信息</a
           ></NavItem
