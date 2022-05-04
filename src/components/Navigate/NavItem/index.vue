@@ -57,7 +57,7 @@ export default {
     },
   },
   computed: mapState({
-    choosedIndex: (state) => state.choosedNav,
+    choosedIndex: (state) => state.navigate.choosedNav,
     inputId() {//inputId用于给input设置id，防止多个导航栏的input的id重复问题
       return this.navIndex + this.navName;
     },
@@ -65,7 +65,7 @@ export default {
   watch: {
     choosedIndex: {
       //监听当前选择的导航，导航改变时也改变文字的颜色
-      // immediate: true,
+      immediate: true,//加上了浏览器回退文字不会自动变色，为什么呢？
       handler() {
         this.$nextTick(() => {
           this.handleTransition();

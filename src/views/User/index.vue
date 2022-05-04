@@ -10,6 +10,7 @@
       </div>
     </div>
     <UserNav />
+    <router-view />
   </div>
 </template>
 
@@ -23,6 +24,9 @@ export default {
   created() {
     this.$store.dispatch("changeChoosedNav", 3);
   },
+  // beforeDestroy() {
+  //   this.$store.dispatch("changeChoosedNav", 0);
+  // }
 };
 </script>
 
@@ -46,7 +50,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    aspect-ratio: 3.2;
+    aspect-ratio: 3.7;
     background-color: antiquewhite;
 
     .user-head {

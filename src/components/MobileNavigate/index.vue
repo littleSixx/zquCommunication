@@ -129,7 +129,7 @@ export default {
     },
   },
   computed: mapState({
-    choosedIndex: (state) => state.choosedNav,
+    choosedIndex: (state) => state.navigate.choosedNav,
   }),
   watch: {
     choosedIndex: {

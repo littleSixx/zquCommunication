@@ -6,7 +6,9 @@ let postDetail = () => import("@/views/PostDetail/");
 let LostAndFoundEdit = () => import("@/views/LostAndFoundEdit/");
 let postEdit = () => import("@/views/postEdit/");
 let User = () => import("@/views/User")
-let MyInfo = () => import("@/views/User/MyInfo/")
+let UserInfo = () => import("@/views/User/UserInfo/")
+let UserPost = () => import("@/views/User/UserPost/")
+let UserLostAndFound = () => import("@/views/User/UserLostAndFound/")
 
 Vue.use(VueRouter);
 
@@ -62,17 +64,27 @@ const routes = [
   },
   {
     path: "/user",
-    redirect: "/user/my-info"
+    redirect: "/user/info"
   },
   {
     path: "/user",
     name: "user",
     component: User,
     children: [
+      {
+        path: "info",
+        name: "Info",
+        component: UserInfo
+      },
       { 
-        path: "my-info",
-        name: "myInfo",
-        component: MyInfo
+        path: "post",
+        name: "Post",
+        component: UserPost
+      },
+      { 
+        path: "lost-and-found",
+        name: "LostAndFound",
+        component: UserLostAndFound
       }
     ],
   },
