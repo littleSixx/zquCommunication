@@ -1,10 +1,19 @@
 <template>
-  <div class="user-post">user-post</div>
+  <div class="user-post">
+    <MainPostItem />
+    <MainPostItem />
+    <MainPostItem />
+    <MainPostItem />
+  </div>
 </template>
 
 <script>
+import MainPostItem from "@/views/Index/MainPostItem/"
 export default {
   name: "UserPost",
+  components: {
+    MainPostItem
+  },
   created() {
     this.$store.dispatch("changeChoosedUserNav", 1);
   },

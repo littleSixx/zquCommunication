@@ -1,5 +1,6 @@
 <template>
   <div class="post-edit">
+    <h1 class="title">发布帖子</h1>
     <el-input
       class="title-input"
       v-model="article.title"
@@ -27,6 +28,7 @@
 <script>
 import "@wangeditor/editor/dist/css/style.css";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import { DomEditor } from "@wangeditor/editor";
 
 export default {
   name: "postEdit",
@@ -36,9 +38,31 @@ export default {
       wangEditor: {
         editor: null,
         html: "<p>hello</p>",
-        toolbarConfig: {},
-        editorConfig: { placeholder: "请输入内容..." },
-        mode: "simple", // or 'simple'
+        toolbarConfig: {
+          excludeKeys: [
+            "uploadVideo",
+            "insertVideo",
+            "video",
+            "clearStyle",
+            "delIndent",
+            "fullScreen",
+            "indent",
+            "through",
+            "group-indent",
+            "group-video",
+            "group-more-style",
+          ],
+        },
+        editorConfig: {
+          placeholder: "请输入内容...",
+          // 单个文件的最大体积限制
+          maxFileSize: 10 * 1024 * 1024,
+          // 最多可上传几个文件
+          maxNumberOfFiles: 10,
+          // 选择文件时的类型限制，默认为 ['image/*'] 。
+          allowedFileTypes: ["image/*"],
+        },
+        mode: "default", // or 'simple'
       },
       article: {
         title: "",
@@ -51,6 +75,8 @@ export default {
     },
     btnClick() {
       console.log(this.wangEditor.editor.getHtml());
+      const toolbar = DomEditor.getToolbar(this.wangEditor.editor);
+      console.log(toolbar.getConfig().toolbarKeys);
     },
   },
   mounted() {
@@ -84,6 +110,16 @@ export default {
   color: #303133;
   background: rgba(255, 255, 255, 0.85);
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 24%), 0 17px 50px 0 rgba(0, 0, 0, 19%) !important;
+
+  .title {
+    margin-top: 0px;
+    margin-bottom: @normal-padding*3;
+
+    text-align: center;
+    color: #606266;
+    font-size: 26px;
+    font-weight: 600;
+  }
 
   .title-input {
     margin-bottom: @normal-padding;

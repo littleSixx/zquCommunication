@@ -26,14 +26,6 @@ export default {
   computed: mapState({
     choosedUserNav: (state) => state.navigate.choosedUserNav,
   }),
-  // watch: {
-  //   choosedUserNav: {
-  //     immediate: true,
-  //     handle() {
-
-  //     }
-  //   }
-  // }
 };
 </script>
 

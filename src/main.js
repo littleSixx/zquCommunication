@@ -23,7 +23,8 @@ import {
   DatePicker,
   TimePicker,
   Progress,
-  Drawer
+  Drawer,
+  Tooltip,
 } from "element-ui";
 Vue.use(Input);
 Vue.use(Select);
@@ -45,6 +46,7 @@ Vue.use(DatePicker);
 Vue.use(TimePicker);
 Vue.use(Progress);
 Vue.use(Drawer);
+Vue.use(Tooltip);
 
 import Navigate from "./components/Navigate/";
 import MobileNavigate from "./components/MobileNavigate/";
@@ -57,6 +59,9 @@ Vue.component(HeadBar.name, HeadBar);
 Vue.config.productionTip = false;
 
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   router,
   store,
   render: (h) => h(App),

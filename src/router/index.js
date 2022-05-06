@@ -37,30 +37,48 @@ const routes = [
     path: "/index",
     name: "Index",
     component: Index,
+    meta: {
+      isShowNav: true
+    },
   },
   {
     path: "/lost-and-found",
     redirect: "/lost-and-found/home",
+    meta: {
+      isShowNav: true
+    },
   },
   {
     path: "/lost-and-found/home",
     name: "LostAndFoundHome",
     component: LostAndFound,
+    meta: {
+      isShowNav: true
+    },
   },
   {
     path: "/lost-and-found/edit",
     name: "LostAndFoundEdit",
     component: LostAndFoundEdit,
+    meta: {
+      isShowNav: true
+    },
   },
   {
     path: "/post-detail/:postId",
     name: "postDetail",
     component: postDetail,
+    meta: {
+      isShowNav: true
+    },
   },
   {
     path: "/post-edit",
     name: "postEdit",
     component: postEdit,
+    meta: {
+      isShowNav: true
+    },
   },
   {
     path: "/user",
@@ -70,6 +88,9 @@ const routes = [
     path: "/user",
     name: "user",
     component: User,
+    meta: {
+      isShowNav: false
+    },
     children: [
       {
         path: "info",

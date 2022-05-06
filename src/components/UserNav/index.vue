@@ -32,7 +32,7 @@ export default {
   width: 100%;
   height: 45px;
   margin-bottom: @normal-padding*2;
-  background-color: violet;
+  // background-color: violet;
   border-radius:0 0 @normal-radius @normal-radius;
 
   .user-nav-container {

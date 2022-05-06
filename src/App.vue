@@ -8,7 +8,7 @@
       <!-- <HeadBar /> -->
       <MobileNavigate />
       <div class="wrapper">
-        <Navigate />
+        <Navigate v-if="$route.meta.isShowNav"></Navigate>
         <div class="left-content">
           <router-view />
         </div>
@@ -25,15 +25,22 @@
     >
       <UserAction />
     </el-dialog>
+    <!-- 用户鼠标移入头像显示 -->
+    <div class="user-profile-view" ref="UserProfileView">
+      <UserProfileView />
+    </div>
+    <!--  -->
   </div>
 </template>
 
 <script>
+import UserProfileView from "@/components/UserProfileView/";
 import UserAction from "@/views/UserAction/";
 export default {
   name: "App",
   components: {
     UserAction,
+    UserProfileView,
   },
   data() {
     return {
@@ -43,19 +50,29 @@ export default {
     };
   },
   mounted() {
-    this.handleResize();
+    // this.handleResize();
+    this.$bus.$on("showUserProfileView",  (payload) => {
+      this.$refs.UserProfileView.style.top = payload.top + 42 + "px"
+      this.$refs.UserProfileView.style.left = payload.left + 42 + "px"
+      this.$refs.UserProfileView.style.visibility = "visible"
+      this.$refs.UserProfileView.style.opacity = 1
+    });
+    this.$bus.$on("closeUserProfileView", () => {
+      this.$refs.UserProfileView.style.visibility = "hidden"
+      this.$refs.UserProfileView.style.opacity = 0
+    })
   },
   methods: {
-    handleResize() {
-      // if (document.body.clientWidth <= 728) {
-      //   //728为lessGlobal.less的mobile-max-width
-      //   // console.log(this.refs.userActionDialog);
-      //   this.isMobile = true;
-      // } else {
-      //   // console.log(this.refs.userActionDialog);
-      //   this.isMobile = false;
-      // }
-    },
+    // handleResize() {
+    //   // if (document.body.clientWidth <= 728) {
+    //   //   //728为lessGlobal.less的mobile-max-width
+    //   //   // console.log(this.refs.userActionDialog);
+    //   //   this.isMobile = true;
+    //   // } else {
+    //   //   // console.log(this.refs.userActionDialog);
+    //   //   this.isMobile = false;
+    //   // }
+    // },
   },
 };
 </script>
@@ -63,8 +80,8 @@ export default {
 @import "./assets/less/lessGlobal.less";
 @import "/font/iconfont.css";
 body {
-  // background-image: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 100%);
-  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 100%);
+  // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   background-attachment: fixed;
 
   #app {
@@ -116,6 +133,16 @@ body {
       @media (max-width: @mobile-max-width) {
         width: 100%;
       }
+    }
+
+    .user-profile-view {
+      visibility:hidden;
+      opacity: 0;
+      position: fixed;
+      width: 350px;
+      height: 220px;
+      background: red;
+      transition: all 0.3s;
     }
   }
 }

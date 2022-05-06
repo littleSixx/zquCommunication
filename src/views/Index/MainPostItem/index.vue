@@ -2,7 +2,18 @@
   <div class="main-post-item">
     <!-- 用户头像/昵称/发表时间信息 -->
     <div class="author-info">
-      <el-avatar class="avatar" :src="avatar"></el-avatar>
+      <!-- 头像 -->
+      <div
+        class="avatar-container"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+        ref="avatar"
+      >
+        <el-avatar class="avatar" :src="avatar"></el-avatar>
+      </div>
+      <!-- 头像/鼠标移入出现详细信息 -->
+      <!-- <HoverAvatar :avatarUrl="avatar" /> -->
+
       <div class="author-name">无名氏</div>
       <div class="post-time">2022年4月18日16:16</div>
     </div>
@@ -62,8 +73,13 @@
 </template>
 
 <script>
+// import HoverAvatar from "@/components/HoverAvatar/";
+
 export default {
   name: "MainPostItem",
+  components: {
+    // HoverAvatar,
+  },
   data() {
     return {
       isLike: false,
@@ -80,9 +96,7 @@ export default {
       default: "/images/default_avatar.png",
     },
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     handleAvatarImage() {
       return {
@@ -112,6 +126,17 @@ export default {
         params: { postId: postId || undefined },
       });
     },
+    //这里的handleMouseEnter和handleMouseLeave可尝试用vue的minx
+    handleMouseEnter() {
+      const payload = {
+        left: this.$refs.avatar.getBoundingClientRect().left,
+        top: this.$refs.avatar.getBoundingClientRect().top,
+      };
+      this.$bus.$emit("showUserProfileView", payload);
+    },
+    handleMouseLeave() {
+      this.$bus.$emit("closeUserProfileView");
+    },
   },
 };
 </script>
@@ -137,7 +162,7 @@ export default {
     height: 46px;
     // background-color: antiquewhite;
 
-    .avatar {
+    .avatar-container {
       float: left;
       width: 42px;
       height: 42px;
@@ -148,6 +173,10 @@ export default {
       color: #222;
       background-size: 100%;
       background-repeat: no-repeat;
+      .avatar {
+        width: 100%;
+        height: 100%;
+      }
     }
     .author-name {
       float: left;
