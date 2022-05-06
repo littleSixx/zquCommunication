@@ -26,7 +26,12 @@
       <UserAction />
     </el-dialog>
     <!-- 用户鼠标移入头像显示 -->
-    <div class="user-profile-view" ref="UserProfileView">
+    <div
+      class="user-profile-view"
+      ref="UserProfileView"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+    >
       <UserProfileView />
     </div>
     <!--  -->
@@ -46,23 +51,46 @@ export default {
     return {
       isMobile: false,
       userActionDialog: true,
+      showUserProfileView: false, //记录鼠标是否在头像图片中
       // isUserAction: true
     };
   },
   mounted() {
     // this.handleResize();
-    this.$bus.$on("showUserProfileView",  (payload) => {
-      this.$refs.UserProfileView.style.top = payload.top + 42 + "px"
-      this.$refs.UserProfileView.style.left = payload.left + 42 + "px"
-      this.$refs.UserProfileView.style.visibility = "visible"
-      this.$refs.UserProfileView.style.opacity = 1
+    this.$bus.$on("showUserProfileView", (payload) => {
+      this.$refs.UserProfileView.style.top = payload.top + 42 + "px";
+      this.$refs.UserProfileView.style.left = payload.left + 42 + "px";
+      this.$refs.UserProfileView.style.visibility = "visible";
+      this.$refs.UserProfileView.style.opacity = 1;
+      this.showUserProfileView = true;
     });
     this.$bus.$on("closeUserProfileView", () => {
-      this.$refs.UserProfileView.style.visibility = "hidden"
-      this.$refs.UserProfileView.style.opacity = 0
-    })
+      this.showUserProfileView = false;
+      setTimeout(() => {
+        if (this.showUserProfileView == false) {
+          this.$refs.UserProfileView.style.visibility = "hidden";
+          this.$refs.UserProfileView.style.opacity = 0;
+        }
+      }, 300);
+    });
   },
   methods: {
+    //当鼠标移入详情时保持显示
+    handleMouseEnter() {
+      this.$refs.UserProfileView.style.visibility = "visible";
+      this.$refs.UserProfileView.style.opacity = 1;
+      this.showUserProfileView = true;
+    },
+    handleMouseLeave() {
+      this.$refs.UserProfileView.style.visibility = "hidden";
+      this.$refs.UserProfileView.style.opacity = 0;
+      this.showUserProfileView = false;
+    }
+    // handleMouseEnter() {
+    //   console.log(1)
+    //   this.$refs.UserProfileView.style.visibility = "visible";
+    //   this.$refs.UserProfileView.style.opacity = 1;
+    // },
     // handleResize() {
     //   // if (document.body.clientWidth <= 728) {
     //   //   //728为lessGlobal.less的mobile-max-width
@@ -136,13 +164,17 @@ body {
     }
 
     .user-profile-view {
-      visibility:hidden;
+      visibility: hidden;
       opacity: 0;
       position: fixed;
       width: 350px;
       height: 220px;
       background: red;
       transition: all 0.3s;
+      &:hover {
+        // visibility: visible !important;
+        background-color: #ace0f9;
+      }
     }
   }
 }
