@@ -208,6 +208,7 @@ export default {
     width: 50px;
     bottom: 150px;
     margin-left: -54px;
+    opacity: 0.85;
     
     @media (max-width: @mobile-max-width) {
       width: 100%;

@@ -10,7 +10,7 @@
       <div class="find-num"><span>数量：</span>1</div>
       <div class="find-des">
         <span>描述：</span
-        >没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用没丢东西，测试用
+        >没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。
       </div>
     </div>
   </div>
@@ -36,7 +36,7 @@ export default {
   margin-bottom: @normal-padding;
   border-radius: @normal-radius;
   background: rgba(255, 255, 255, 0.75);
-  transition: all 0.3s;
+  transition: all 0.2s;
   &:hover {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.85);
@@ -75,7 +75,7 @@ export default {
 
     h1 {
       margin-left: 5px;
-      margin-top: 0;
+      margin-top: 8px;
       letter-spacing: 2px;
       font-size: 20px;
       font-weight: 600;

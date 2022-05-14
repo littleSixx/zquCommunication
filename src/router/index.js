@@ -9,6 +9,7 @@ let User = () => import("@/views/User")
 let UserInfo = () => import("@/views/User/UserInfo/")
 let UserPost = () => import("@/views/User/UserPost/")
 let UserLostAndFound = () => import("@/views/User/UserLostAndFound/")
+let MyFollow = () => import("@/views/MyFollow/")
 
 Vue.use(VueRouter);
 
@@ -66,7 +67,7 @@ const routes = [
   },
   {
     path: "/post-detail/:postId",
-    name: "postDetail",
+    name: "PostDetail",
     component: postDetail,
     meta: {
       isShowNav: true
@@ -74,11 +75,19 @@ const routes = [
   },
   {
     path: "/post-edit",
-    name: "postEdit",
+    name: "PostEdit",
     component: postEdit,
     meta: {
       isShowNav: true
     },
+  },
+  {
+    path: "/my-follow",
+    name: "MyFollow",
+    component: MyFollow,
+    meta: {
+      isShowNav: true
+    }
   },
   {
     path: "/user",
@@ -86,7 +95,7 @@ const routes = [
   },
   {
     path: "/user",
-    name: "user",
+    name: "User",
     component: User,
     meta: {
       isShowNav: false

@@ -20,4 +20,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.user-post {
+  padding: 0 @normal-padding*2;
+}
+</style>

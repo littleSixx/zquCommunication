@@ -42,7 +42,7 @@
             ><i class="iconfont icon-find"></i>失物招领</a
           ></NavItem
         >
-        <NavItem :navName="navName" :navIndex="2"
+        <NavItem :navName="navName" pathTo="/my-follow" :navIndex="2"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-icon_followed"></i>我的关注</a
           ></NavItem

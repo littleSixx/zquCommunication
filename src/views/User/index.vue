@@ -47,8 +47,6 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  // display: flex;
-  // justify-content: center;
   width: 60%;
   max-width: @container-max-width;
   height: 1500px;
@@ -58,6 +56,7 @@ export default {
   margin-left: @normal-padding;
   margin-bottom: 50px;
   border-radius: @normal-radius;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 24%), 0 17px 50px 0 rgba(0, 0, 0, 19%);
   @media (max-width: @pad-max-width) {
     width: 80%;
     margin-left: 0;
@@ -71,18 +70,30 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     width: 100%;
-    aspect-ratio: 3.7;
+    aspect-ratio: @user-bg-aspect-ratio;
     background-image: url("/images/default_user_background.jpg");
     background-size: 100%;
     background-position-x: 50%;
     background-position-y: 50%;
     background-repeat: no-repeat;
 
+    &::before {//背景遮罩层
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events:none;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
     .user-head {
       display: flex;
       align-items: center;
       flex-direction: column;
+      z-index: 2;//防止被遮罩层覆盖
 
       .user-avatar {
         width: 100px;

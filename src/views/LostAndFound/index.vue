@@ -1,7 +1,6 @@
 <template>
   <div class="lost-and-found">
     <div class="container">
-      <!-- <Navigate /> -->
       <div class="main">
         <LostAndFoundItem />
         <LostAndFoundItem />
@@ -35,17 +34,12 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    //之后height记得删掉
-    // height: 1500px;
 
     .main {
       flex: 1;
       margin:0 @normal-padding;
-      // margin-left: 8px;
       min-width: 360px;
       transition: all 0.3s;
-
-      
     }
   }
 }

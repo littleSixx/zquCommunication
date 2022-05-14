@@ -56,13 +56,11 @@ export default {
     width: calc(100% - 40px);
     height: 45px;
     padding-left: 10px;
-    color: #222;
-    // background-color: aquamarine;
 
     .follow-user-name {
       font-size: 14px;
       line-height: 25px;
-      // font-weight: 600;
+      font-weight: 600;
       .singal-line-overflow-ellipsis();
     }
 

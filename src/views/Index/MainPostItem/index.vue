@@ -17,6 +17,7 @@
       <div class="author-name">无名氏</div>
       <div class="post-time">2022年4月18日16:16</div>
     </div>
+    <el-divider class="divider"></el-divider>
     <!-- 主题内容 ，"enterPostDetail(postId)中的postId由父组件v-for遍历的时候通过props传过来-->
     <div class="post-content" @click="enterPostDetail()">
       <p class="selection-style">
@@ -122,7 +123,7 @@ export default {
       postId;
       // this.$router.push(`/postDetail/${postId}`)
       this.$router.push({
-        name: "postDetail",
+        name: "PostDetail",
         params: { postId: postId || undefined },
       });
     },
@@ -185,6 +186,7 @@ export default {
       margin-left: 12px;
       transform: translateY(-50%);
       //
+      color: #303133;
       padding-left: @normal-padding;
       font-weight: 600;
     }
@@ -196,6 +198,8 @@ export default {
       transform: translateY(-50%);
       //
       font-size: 12px;
+      font-weight: 600;
+      color: #303133;
       padding-left: @normal-padding;
     }
   }
@@ -231,9 +235,12 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 120px;
-    height: 45px;
+    width: 200px;
+    height: 50px;
+    padding: 8px 24px;
+    border-radius: 50px;
     // background-color: #f7f7f7;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 
     .like,
     .comment,
@@ -244,7 +251,7 @@ export default {
 
       i {
         color: #555767;
-        font-size: 26px;
+        font-size: 22px;
         transition: all 0.2s;
       }
       i:hover {
@@ -262,6 +269,10 @@ export default {
 
   .comment-detail {
     height: 500px;
+  }
+
+  .divider {
+    margin: @normal-padding 0;
   }
 }
 </style>

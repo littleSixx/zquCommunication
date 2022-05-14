@@ -108,8 +108,8 @@ export default {
 @import "./assets/less/lessGlobal.less";
 @import "/font/iconfont.css";
 body {
-  background-image: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 100%);
-  // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  // background-image: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 100%);
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   background-attachment: fixed;
 
   #app {
@@ -130,6 +130,8 @@ body {
 
       .left-content {
         flex: 1;
+        margin-bottom: 50px;
+        // overflow: hidden;//若不注释会导致发布帖子界面的阴影被隐藏问题
       }
     }
 
@@ -168,12 +170,11 @@ body {
       opacity: 0;
       position: fixed;
       width: 350px;
-      height: 220px;
-      background: red;
+      // height: 300px;//高度让内容自适应吧
       transition: all 0.3s;
       &:hover {
         // visibility: visible !important;
-        background-color: #ace0f9;
+        // background-color: #ace0f9;
       }
     }
   }

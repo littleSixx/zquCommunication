@@ -122,9 +122,10 @@
 
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
+            size="medium"
             >发布</el-button
           >
-          <el-button @click="resetForm(ruleForm)">重置</el-button>
+          <el-button @click="resetForm(ruleForm)" size="medium">重置</el-button>
         </el-form-item>
       </el-form>
       <!-- el-dialog原本在这里，现在移到了上面去，不知道有没有问题。el-dialog是和图片上传有关的 -->
@@ -231,7 +232,6 @@ export default {
   height: 800px;
   padding: @normal-padding*3 @normal-padding*2;
   margin-left: @normal-padding;
-  margin-bottom: 50px;
   border-radius: @normal-radius;
   margin-top: 3px;
   color: #303133;
