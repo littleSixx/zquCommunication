@@ -9,58 +9,46 @@
         @mouseleave="handleMouseLeave"
         ref="avatar"
       >
-        <el-avatar class="avatar" :src="avatar"></el-avatar>
+        <el-avatar class="avatar" :src="postItem.aimgUrl"></el-avatar>
       </div>
       <!-- 头像/鼠标移入出现详细信息 -->
       <!-- <HoverAvatar :avatarUrl="avatar" /> -->
 
-      <div class="author-name">无名氏</div>
-      <div class="post-time">2022年4月18日16:16</div>
+      <div class="author-name">{{ postItem.username }}</div>
+      <div class="post-time">{{ postItem.createTime }}</div>
     </div>
     <el-divider class="divider"></el-divider>
     <!-- 主题内容 ，"enterPostDetail(postId)中的postId由父组件v-for遍历的时候通过props传过来-->
-    <div class="post-content" @click="enterPostDetail()">
-      <p class="selection-style">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi nemo
-        deserunt vel tenetur fugiat sint expedita blanditiis vero, numquam ea
-        iure eum. Vel recusandae dolore officiis laudantium, delectus
-        repellendus corrupti? Inventore, ea aut? In esse est consectetur impedit
-        ut a quis quo, saepe id nihil mollitia placeat magni perferendis error
-        harum nam et cum doloremque eaque optio iusto tempore vitae. Molestiae
-        aut aliquid magnam fuga similique eaque eum illo vero, maiores sequi
-        voluptates at architecto. Reiciendis veniam corporis tempore, rem rerum
-        saepe nihil? Dolorum voluptatem facilis, et tempora ducimus iure. Alias,
-        quo voluptate et aliquid neque, animi dolore vero necessitatibus eius,
-        perferendis tempore obcaecati! Ipsum veritatis placeat voluptate
-        architecto dolores a delectus, nostrum itaque, rem obcaecati corporis
-        similique quas distinctio. Explicabo sapiente dicta, accusantium quos ea
-        architecto, dolor cupiditate consequatur vel sit maxime. Corrupti quis,
-        a molestias quaerat nulla nesciunt? Non adipisci sit architecto
-        blanditiis fuga et quidem autem reiciendis!
-      </p>
+    <div class="post-content" @click="enterPostDetail(postItem.aid)">
+      <p class="selection-style" v-html="postItem.acontent"></p>
     </div>
     <!-- 点赞和评论按钮 -->
     <div class="operations">
-      <div class="like" @click="handleLike" :class="{ 'is-like': isLike }">
-        <el-badge :value="likeValue" :max="99" class="item">
+      <div
+        class="like"
+        @click="handleLike(postItem.aid)"
+        :class="{ 'is-like': isLike }"
+      >
+        <el-badge :value="likeNum ? likeNum : 0" :max="99" class="item">
           <i class="iconfont icon-good-filling"></i>
         </el-badge>
       </div>
-      <div
+      <!-- 收藏，先不实现 -->
+      <!-- <div
         class="collect"
         @click="handleCollect"
         :class="{ 'is-collect': isCollect }"
       >
-        <el-badge :value="collectValue" :max="99" class="item">
+        <el-badge :value="postItem.collectNum" :max="99" class="item">
           <i class="iconfont icon-shoucangxiao"></i>
         </el-badge>
-      </div>
+      </div> -->
       <div
         class="comment"
-        @click="handleComment"
+        @click="handleComment(postItem.aid)"
         :class="{ 'is-comment': isComment }"
       >
-        <el-badge :value="commentValue" :max="99" class="item">
+        <el-badge :value="postItem.commentValue" :max="99" class="item">
           <i class="iconfont icon-pinglun"></i>
         </el-badge>
       </div>
@@ -74,6 +62,7 @@
 </template>
 
 <script>
+import { myMixin } from "../../../utils/myMixin";
 // import HoverAvatar from "@/components/HoverAvatar/";
 
 export default {
@@ -81,20 +70,24 @@ export default {
   components: {
     // HoverAvatar,
   },
+  mixins: [myMixin],
   data() {
     return {
-      isLike: false,
-      likeValue: 0,
-      isComment: false,
-      commentValue: 0,
-      isCollect: false,
-      collectValue: 0,
+      // isLike: false,
+      // likeValue: 0,
+      // isComment: false,
+      // commentValue: 0,
+      // isCollect: false,
+      // collectValue: 0,
     };
   },
   props: {
-    avatar: {
-      type: String,
-      default: "/images/default_avatar.png",
+    // avatar: {
+    //   type: String,
+    //   default: "/images/default_avatar.png",
+    // },
+    postItem: {
+      type: Object,
     },
   },
   created() {},
@@ -104,23 +97,21 @@ export default {
         backgroundImage: `url(${this.avatar})`,
       };
     },
-    handleLike() {
-      this.isLike = !this.isLike;
-      if (this.isLike) this.likeValue++;
-      else this.likeValue--;
-    },
-    handleCollect() {
-      this.isCollect = !this.isCollect;
-      if (this.isCollect) this.collectValue++;
-      else this.collectValue--;
-    },
-    handleComment() {
-      this.isComment = !this.isComment;
-    },
+    // handleLike() {
+    //   this.isLike = !this.isLike;
+    //   if (this.isLike) this.likeValue++;
+    //   else this.likeValue--;
+    // },
+    // handleCollect() {
+    //   this.isCollect = !this.isCollect;
+    //   if (this.isCollect) this.collectValue++;
+    //   else this.collectValue--;
+    // },
+    // handleComment() {
+    //   this.isComment = !this.isComment;
+    // },
     enterPostDetail(postId) {
-      postId = 12345;
       // console.log(postId)
-      postId;
       // this.$router.push(`/postDetail/${postId}`)
       this.$router.push({
         name: "PostDetail",
@@ -132,6 +123,7 @@ export default {
       const payload = {
         left: this.$refs.avatar.getBoundingClientRect().left,
         top: this.$refs.avatar.getBoundingClientRect().top,
+        postItem: this.postItem,
       };
       this.$bus.$emit("showUserProfileView", payload);
     },
@@ -175,8 +167,11 @@ export default {
       background-size: 100%;
       background-repeat: no-repeat;
       .avatar {
-        width: 100%;
-        height: 100%;
+        ::v-deep img {
+          width: 100%;
+        }
+        // width: 100%;
+        // height: 100%;
       }
     }
     .author-name {
@@ -235,7 +230,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 200px;
+    width: 120px;
     height: 50px;
     padding: 8px 24px;
     border-radius: 50px;

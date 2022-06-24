@@ -1,23 +1,26 @@
 <template>
   <div class="my-follow">
     <div class="user-item">
-      <UserItem />
+      <UserItem :authorInfo="activeAuthorInfo" />
     </div>
     <div class="user-item">
-      <UserItem />
+      <UserItem :authorInfo="activeAuthorInfo" />
     </div>
     <div class="user-item">
-      <UserItem />
+      <UserItem :authorInfo="activeAuthorInfo" />
     </div>
     <div class="user-item">
-      <UserItem />
+      <UserItem :authorInfo="activeAuthorInfo" />
     </div>
     <div class="user-item">
-      <UserItem />
+      <UserItem :authorInfo="activeAuthorInfo" />
     </div>
     <div class="user-item">
-      <UserItem />
+      <UserItem :authorInfo="activeAuthorInfo" />
     </div>
+    <!-- i标签用于占位 -->
+    <i></i>
+    <i></i>
     <i></i>
     <i></i>
     <i></i>
@@ -32,6 +35,16 @@ export default {
   components: {
     UserItem,
   },
+  data() {
+    return {
+      activeAuthorInfo: {
+        authorId: "",
+        name: "",
+        authorDesc: "",
+        isFollow: "",
+      },
+    };
+  },
   created() {
     this.$store.dispatch("changeChoosedNav", 2); //进入该页面后，改变vuex中已选中的导航
   },
@@ -39,13 +52,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@item-width: 250px;
+@item-width: 238px;
 .my-follow {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   // height: 1500px;
-  padding: @normal-padding*3 @normal-padding*2;
+  padding: @normal-padding*3 0;
   margin-left: @normal-padding;
   border-radius: @normal-radius;
   margin-top: 3px;
@@ -54,6 +67,7 @@ export default {
   .user-item {
     flex-shrink: 0;
     width: @item-width;
+    padding: 0 @normal-padding;
     margin-bottom: @normal-padding*2;
 
     &:hover .user-profile-view-container {

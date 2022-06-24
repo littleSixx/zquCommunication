@@ -1,14 +1,24 @@
 <template>
   <div class="index">
     <div class="container">
-      <div class="main">
+      <div
+        class="main"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(255, 255, 255, 0.8)"
+      >
+        <MainPostItem
+          v-for="postItem in postItems"
+          :key="postItem.postId"
+          :postItem="postItem"
+        />
+        <!-- <MainPostItem />
         <MainPostItem />
         <MainPostItem />
         <MainPostItem />
         <MainPostItem />
-        <MainPostItem />
-        <MainPostItem />
-        <MainPostItem />
+        <MainPostItem /> -->
       </div>
       <Follow />
     </div>
@@ -18,6 +28,7 @@
 <script>
 import Follow from "@/views/Index/Follow/";
 import MainPostItem from "@/views/Index/MainPostItem/";
+import { mapState } from "vuex";
 
 export default {
   name: "Index",
@@ -27,20 +38,27 @@ export default {
   },
   data() {
     return {
-      pageSize: 2,
+      pageSize: 10,
       pageNum: 1,
+      loading: true,
     };
   },
   created() {
     this.$store.dispatch("changeChoosedNav", 0); //进入该页面后，改变vuex中已选中的导航
     // console.log(this.pageNum)
-    this.$store.dispatch("getIndexPostItem", {
-      pageSize: this.pageSize,
-      pageNum: this.pageNum,
-    }); //获取帖子数据
+    let payload = { pageSize: this.pageSize, pageNum: this.pageNum };
+    this.$store.dispatch("getPostItems", payload); //获取帖子数据
   },
   mounted() {},
   methods: {},
+  computed: mapState({
+    postItems: (state) => state.post.postItems,
+  }),
+  watch: {
+    postItems() {
+      this.loading = false;
+    },
+  },
 };
 </script>
 
@@ -59,6 +77,7 @@ export default {
       flex: 1;
       margin: 0 @normal-padding;
       // min-width: 360px;
+      min-height: 300px; //为了没加载出来时也能有“加载中”显示的高度
       border-radius: @normal-radius;
       transition: all 0.3s;
     }

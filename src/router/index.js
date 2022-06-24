@@ -1,15 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-let Index = () => import("@/views/Index/");
-let LostAndFound = () => import("@/views/LostAndFound/");
-let postDetail = () => import("@/views/PostDetail/");
-let LostAndFoundEdit = () => import("@/views/LostAndFoundEdit/");
-let postEdit = () => import("@/views/postEdit/");
-let User = () => import("@/views/User")
-let UserInfo = () => import("@/views/User/UserInfo/")
-let UserPost = () => import("@/views/User/UserPost/")
-let UserLostAndFound = () => import("@/views/User/UserLostAndFound/")
-let MyFollow = () => import("@/views/MyFollow/")
+import store from "@/store/index.js";
+import routes from "./routes.js";
+
+// import { Message } from "element-ui"
+// Vue.prototype.$message = Message;
 
 Vue.use(VueRouter);
 
@@ -29,101 +24,30 @@ VueRouter.prototype.push = function (location, resolve, reject) {
   }
 };
 
-const routes = [
-  {
-    path: "/",
-    redirect: "/index",
-  },
-  {
-    path: "/index",
-    name: "Index",
-    component: Index,
-    meta: {
-      isShowNav: true
-    },
-  },
-  {
-    path: "/lost-and-found",
-    redirect: "/lost-and-found/home",
-    meta: {
-      isShowNav: true
-    },
-  },
-  {
-    path: "/lost-and-found/home",
-    name: "LostAndFoundHome",
-    component: LostAndFound,
-    meta: {
-      isShowNav: true
-    },
-  },
-  {
-    path: "/lost-and-found/edit",
-    name: "LostAndFoundEdit",
-    component: LostAndFoundEdit,
-    meta: {
-      isShowNav: true
-    },
-  },
-  {
-    path: "/post-detail/:postId",
-    name: "PostDetail",
-    component: postDetail,
-    meta: {
-      isShowNav: true
-    },
-  },
-  {
-    path: "/post-edit",
-    name: "PostEdit",
-    component: postEdit,
-    meta: {
-      isShowNav: true
-    },
-  },
-  {
-    path: "/my-follow",
-    name: "MyFollow",
-    component: MyFollow,
-    meta: {
-      isShowNav: true
-    }
-  },
-  {
-    path: "/user",
-    redirect: "/user/info"
-  },
-  {
-    path: "/user",
-    name: "User",
-    component: User,
-    meta: {
-      isShowNav: false
-    },
-    children: [
-      {
-        path: "info",
-        name: "Info",
-        component: UserInfo
-      },
-      { 
-        path: "post",
-        name: "Post",
-        component: UserPost
-      },
-      { 
-        path: "lost-and-found",
-        name: "LostAndFound",
-        component: UserLostAndFound
-      }
-    ],
-  },
-];
-
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const userData = store.state.user.loginUserData;
+  //将要跳转的页面是否需要登录
+  if (to.meta.isAuth === true) {
+    //如果没有登录
+    if (!userData.token) {
+      Vue.prototype.$message.warning("请先登录");
+      //若来的页面是需要验证的，则跳到首页
+      if (from.meta.isAuth === true) {
+        next("/");
+      } else {
+        //若来的页面是不需要验证的，则跳到来的地方
+        next(from);
+      }
+      Vue.prototype.$bus.$emit("userActionDialog", true);
+    }
+  }
+  next();
 });
 
 export default router;

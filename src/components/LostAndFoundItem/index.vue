@@ -4,13 +4,18 @@
       <el-image class="picture-content" :src="url" :fit="fit"></el-image>
     </div>
     <div class="description">
-      <h1>校园卡</h1>
-      <div class="find-time"><span>发现时间：</span>2022年4月26日13:30</div>
-      <div class="find-site"><span>发现地点：</span>四饭三楼</div>
-      <div class="find-num"><span>数量：</span>1</div>
+      <h1>{{ lostAndFindItem.findName }}</h1>
+      <div class="find-time">
+        <span>发现时间：</span>{{ lostAndFindItem.findTime }}
+      </div>
+      <div class="find-site">
+        <span>发现地点：</span>{{ lostAndFindItem.findSite }}
+      </div>
+      <div class="find-num">
+        <span>数量：</span>{{ lostAndFindItem.findNum }}
+      </div>
       <div class="find-des">
-        <span>描述：</span
-        >没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。没丢东西，测试用。
+        <span>描述：</span>{{ lostAndFindItem.findDesc }}
       </div>
     </div>
   </div>
@@ -19,6 +24,11 @@
 <script>
 export default {
   name: "LostAndFoundItem",
+  props: {
+    lostAndFindItem: {
+      type: Object,
+    },
+  },
   data() {
     return {
       url: "./",

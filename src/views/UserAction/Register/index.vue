@@ -6,11 +6,8 @@
       :model="ruleForm"
       :rules="rules"
       ref="ruleForm"
-      label-width="100px"
+      label-width="120px"
     >
-      <el-form-item label="电子邮箱：" prop="email">
-        <el-input v-model="ruleForm.email"></el-input>
-      </el-form-item>
       <el-form-item label="昵称：" prop="username">
         <el-input v-model="ruleForm.username"></el-input>
       </el-form-item>
@@ -23,6 +20,7 @@
       <el-form-item label="生日：">
         <el-form-item prop="birthday">
           <el-date-picker
+            value-format="yyyy-MM-dd"
             type="date"
             placeholder="选择日期"
             v-model="ruleForm.birthday"
@@ -30,11 +28,24 @@
           ></el-date-picker>
         </el-form-item>
       </el-form-item>
-      <el-form-item label="性别" prop="gender">
+      <el-form-item label="性别：" prop="gender">
         <el-radio-group v-model="ruleForm.gender">
-          <el-radio :label="0">男</el-radio>
-          <el-radio :label="1">女</el-radio>
+          <el-radio :label="1">男</el-radio>
+          <el-radio :label="0">女</el-radio>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item label="电子邮箱：" prop="email">
+        <div style="display: flex">
+          <el-input v-model="ruleForm.email"></el-input>
+          <el-button
+            @click="sendEmail(ruleForm.email)"
+            style="width: 120px; margin-left: 8px"
+            >发送验证码</el-button
+          >
+        </div>
+      </el-form-item>
+      <el-form-item label="邮箱验证码：" prop="emailVerify">
+        <el-input v-model="ruleForm.emailVerify"></el-input>
       </el-form-item>
       <!-- 图片上传 -->
       <!-- <el-form-item label="头像：">
@@ -80,11 +91,14 @@
         </el-dialog>
       </el-form-item> -->
 
-      <el-form-item>
-        <el-button type="primary" @click="registerForm(ruleForm)"
+      <!-- <el-form-item> -->
+      <div class="btn-container" style="text-align: center">
+        <el-button type="primary" style="" @click="registerForm(ruleForm)"
           >注册</el-button
         >
-      </el-form-item>
+      </div>
+      <a class="switch" @click="switchMode('login')">切换到登录</a>
+      <!-- </el-form-item> -->
     </el-form>
 
     <!-- 自己写的input组件，太丑了，可能用不上 -->
@@ -128,18 +142,21 @@ export default {
     const checkPassword = (rule, value, callback) => {
       rule;
       value;
-      return this.ruleForm.password === value ? callback() : callback(new Error("两次密码不一样"))
-    }
+      return this.ruleForm.password === value
+        ? callback()
+        : callback(new Error("两次密码不一样"));
+    };
     return {
       dialogVisible: false,
       dialogImageUrl: "",
       ruleForm: {
-        email: "",
         username: "",
         password: "",
         passwordConfirm: "",
         birthday: "",
-        gender: -1,//用户可选性别，若默认为-1，即为不选择
+        gender: 0, //用户可选性别，即为不选择
+        email: "",
+        emailVerify: "",
       },
       rules: {
         email: [
@@ -148,15 +165,28 @@ export default {
         ],
         username: [
           { required: true, message: "请输入昵称", trigger: "blur" },
-          { min: 3, max: 16, message: "长度在 3 到 16 个字符", trigger: "blur" },
+          {
+            min: 3,
+            max: 16,
+            message: "长度在 3 到 16 个字符",
+            trigger: "blur",
+          },
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 8, max: 20, message: "长度在 8 到 20 个字符", trigger: "blur" },
+          {
+            min: 8,
+            max: 20,
+            message: "长度在 8 到 20 个字符",
+            trigger: "blur",
+          },
         ],
         passwordConfirm: [
           { required: true, message: "请确认密码", trigger: "blur" },
           { validator: checkPassword, trigger: "blur" },
+        ],
+        emailVerify: [
+          { required: true, message: "请输入邮箱验证码", trigger: "blur" },
         ],
         birthday: [],
         gender: [],
@@ -164,9 +194,22 @@ export default {
     };
   },
   methods: {
-    registerForm(ruleForm) {
-      this.$store.dispatch("userRegister", this.ruleForm)
-      console.log(ruleForm)
+    async registerForm(ruleForm) {
+      let result = await this.$store.dispatch("userRegister", ruleForm);
+      console.log(result);
+      if (result.flag === true) {
+        this.$message.success("注册成功，快去登陆吧~");
+        this.$emit("switchMode", "login");
+      } else {
+        this.$message.error("出错了~");
+      }
+    },
+    switchMode(mode) {
+      this.$emit("switchMode", mode);
+    },
+    sendEmail(email) {
+      const payload = { email };
+      this.$store.dispatch("sendEmail", payload);
     },
   },
 };
@@ -180,6 +223,17 @@ export default {
     font-size: 26px;
     font-weight: 600;
     text-align: center;
+  }
+
+  .btn-container {
+    position: relative;
+  }
+  .switch {
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: #98c379;
+    cursor: pointer;
   }
 }
 </style>

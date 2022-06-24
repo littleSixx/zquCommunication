@@ -13,12 +13,16 @@
     "axios": "^0.27.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.8",
+    "js-md5": "^0.7.3",
     "less": "^4.1.2",
     "less-loader": "^6.2.0",
     "nprogress": "^0.2.0",
+    "qs": "^6.10.5",
     "vue": "^2.6.11",
+    "vue-elementui-skeleton": "^1.0.2",
     "vue-router": "^3.2.0",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",

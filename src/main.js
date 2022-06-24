@@ -2,7 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+// import "@/network/mock/mock.js";
+import * as api from "@/network/index.js"
 // import requests from "@/network/request.js"
+// import VueElementUISkeleton from 'vue-elementui-skeleton';
 import {
   Input,
   Select,
@@ -25,6 +28,8 @@ import {
   Progress,
   Drawer,
   Tooltip,
+  Loading,
+  Message
 } from "element-ui";
 Vue.use(Input);
 Vue.use(Select);
@@ -47,6 +52,8 @@ Vue.use(TimePicker);
 Vue.use(Progress);
 Vue.use(Drawer);
 Vue.use(Tooltip);
+Vue.use(Loading);
+// Vue.use(VueElementUISkeleton);
 
 import Navigate from "./components/Navigate/";
 import MobileNavigate from "./components/MobileNavigate/";
@@ -61,6 +68,8 @@ Vue.config.productionTip = false;
 new Vue({
   beforeCreate() {
     Vue.prototype.$bus = this;
+    Vue.prototype.$API = api
+    Vue.prototype.$message = Message;
   },
   router,
   store,

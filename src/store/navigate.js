@@ -1,6 +1,6 @@
 const state = { 
   choosedNav: Number(localStorage.getItem("choosedNav")) || 0, 
-  choosedUserNav: Number(localStorage.getItem("choosedUserNav") || 0)
+  choosedUserNav: Number(localStorage.getItem("choosedUserNav")) || 0
 };
 const mutations = {
   CHANGECHOOSENAV(state, index) {

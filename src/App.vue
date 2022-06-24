@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <!-- 注册/登录 -->
+    <!-- 注册/登录(暂时先注释掉) -->
     <el-dialog
       class="user-action-dialog"
       :visible.sync="userActionDialog"
@@ -32,13 +32,14 @@
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
     >
-      <UserProfileView />
+      <UserProfileView :authorInfo="activeAuthorInfo" />
     </div>
     <!--  -->
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import UserProfileView from "@/components/UserProfileView/";
 import UserAction from "@/views/UserAction/";
 export default {
@@ -50,19 +51,43 @@ export default {
   data() {
     return {
       isMobile: false,
-      userActionDialog: true,
+      userActionDialog: false,
       showUserProfileView: false, //记录鼠标是否在头像图片中
       // isUserAction: true
+      activeAuthorInfo: {
+        authorId: "",
+        name: "",
+        authorDesc: "",
+        isFollow: "",
+      }, //鼠标移入显示的用户信息
     };
+  },
+  computed: {
+    ...mapState({
+      loginUserData: (state) => state.user.loginUserData,
+    }),
   },
   mounted() {
     // this.handleResize();
+    this.$bus.$on("userActionDialog", (isShowLogin) => {
+      // console.log("isShowLogin:", isShowLogin);
+      this.userActionDialog = isShowLogin;
+    });
     this.$bus.$on("showUserProfileView", (payload) => {
       this.$refs.UserProfileView.style.top = payload.top + 42 + "px";
       this.$refs.UserProfileView.style.left = payload.left + 42 + "px";
       this.$refs.UserProfileView.style.visibility = "visible";
       this.$refs.UserProfileView.style.opacity = 1;
       this.showUserProfileView = true;
+      //鼠标移入获取用户信息
+      if (this.activeAuthorInfo !== payload.postItem.authorId) {
+        //当上一次移入的用户头像和这一次不一样时，需要重新发送请求，获取用户信息
+        this.activeAuthorInfo.authorId = payload.postItem.authorId;
+        this.activeAuthorInfo.name = payload.postItem.name;
+        this.activeAuthorInfo.authorDesc = payload.postItem.authorDesc;
+        this.activeAuthorInfo.isFollow = payload.postItem.isFollow;
+        //do something
+      }
     });
     this.$bus.$on("closeUserProfileView", () => {
       this.showUserProfileView = false;
@@ -85,7 +110,7 @@ export default {
       this.$refs.UserProfileView.style.visibility = "hidden";
       this.$refs.UserProfileView.style.opacity = 0;
       this.showUserProfileView = false;
-    }
+    },
     // handleMouseEnter() {
     //   console.log(1)
     //   this.$refs.UserProfileView.style.visibility = "visible";

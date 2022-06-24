@@ -1,6 +1,9 @@
 <template>
   <div class="user">
     <div class="user-header">
+      <el-button class="logout-btn" @click="logout" size="mini" type="primary"
+        >退出登录</el-button
+      >
       <div class="user-head">
         <div class="user-avatar"></div>
         <div class="username">little-six</div>
@@ -34,6 +37,10 @@ export default {
   methods: {
     backBtnClick() {
       this.$router.push("/index");
+    },
+    logout() {
+      this.$store.commit("CLEARLOGINUSERDATA");
+      this.$router.replace("/");
     },
   },
   // beforeDestroy() {
@@ -79,21 +86,33 @@ export default {
     background-position-y: 50%;
     background-repeat: no-repeat;
 
-    &::before {//背景遮罩层
+    &::before {
+      //背景遮罩层
       content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events:none;
+      pointer-events: none;
       background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-top: 16px;
+      margin-right: 16px;
+      ::v-deep span {
+        font-size: 13px;
+      }
     }
     .user-head {
       display: flex;
       align-items: center;
       flex-direction: column;
-      z-index: 2;//防止被遮罩层覆盖
+      z-index: 2; //防止被遮罩层覆盖
 
       .user-avatar {
         width: 100px;

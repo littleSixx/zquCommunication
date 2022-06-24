@@ -6,13 +6,14 @@
         <el-avatar class="avatar" src="/images/default_avatar.png"></el-avatar>
       </div>
       <div class="user-profile-view-header">
-        <h1 class="nickname">无名氏</h1>
+        <h1 class="nickname">{{ authorInfo.name }}</h1>
       </div>
       <div class="user-profile-view-body">
-        <p>这个人很懒~这个人很懒~这个人很懒~这个人很懒~这个人很懒~</p>
+        <p>{{ authorInfo.authorDesc }}</p>
       </div>
       <div class="user-profile-view-footer">
-        <el-button size="mini">关 注</el-button>
+        <el-button size="mini" v-if="!authorInfo.isFollow">关 注</el-button>
+        <el-button size="mini" v-else>取 关</el-button>
         <el-button size="mini">私 信</el-button>
       </div>
     </div>
@@ -22,6 +23,19 @@
 <script>
 export default {
   name: "UserProfileView",
+  props: {
+    authorInfo: {
+      type: Object,
+    },
+  },
+  // watch: {
+  //   authorInfo: {
+  //     immediate: true,
+  //     handle() {
+  //       console.log(authorInfo);
+  //     },
+  //   },
+  // },
 };
 </script>
 
@@ -63,7 +77,7 @@ export default {
       // float: left;
       height: 40px;
       margin-left: 56px;
-      margin-bottom: @normal-padding;
+      // margin-bottom: @normal-padding;
       // background-color: red;
 
       .nickname {
@@ -81,6 +95,7 @@ export default {
       // background-color: red;
 
       p {
+        margin-top: 0;
         font-size: 14px;
       }
     }
