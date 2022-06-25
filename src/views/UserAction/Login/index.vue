@@ -87,7 +87,11 @@ export default {
             this.$message.error(result.msg);
           } else if (result.flag === true) {
             this.$message.success(result.msg);
+            //全局事件总线关闭登录的对话框
             this.$bus.$emit("userActionDialog", false);
+            //登录成功后重新请求首页的所有帖子（此处为刷新页面）
+            this.$router.go(0)
+            this.$store.dispatch("reqAllFollow"); //获取该用户关注的所有人
           }
         } else {
           this.$message.error("输入的内容不符合要求");

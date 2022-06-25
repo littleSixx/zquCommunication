@@ -68,7 +68,7 @@ export default {
             // 配置上传图片
             uploadImage: {
               // customUploadImages: this.customUploadImages,
-              server: "http://10.12.2.100:8080/user/upload/file?dir=aContent",
+              server: "",
               fieldName: "multipartFile",
               // 单个文件的最大体积限制，默认为 2M
               maxFileSize: 10 * 1024 * 1024,
@@ -118,11 +118,16 @@ export default {
   computed: {
     ...mapState({
       loginUserData: (state) => state.user.loginUserData,
+      requestUrl: (state) => state.requestUrl,
     }),
   },
   created() {
+    //设置请求所带的token
     this.wangEditor.editorConfig.MENU_CONF.uploadImage.headers.authorization =
       this.loginUserData.token;
+    //设置上传图片的url
+    this.wangEditor.editorConfig.MENU_CONF.uploadImage.server =
+      this.requestUrl + "/user/upload/file?dir=aContent";
   },
   methods: {
     customUploadImages(file, insertFn) {

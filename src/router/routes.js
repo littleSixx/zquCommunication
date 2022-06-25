@@ -77,11 +77,11 @@ const routes = [
     },
   },
   {
-    path: "/user",
-    redirect: "/user/info",
+    path: "/user/:uid",
+    redirect: "/user/:uid/info",
   },
   {
-    path: "/user",
+    path: "/user/:uid",
     name: "User",
     component: User,
     // meta: {

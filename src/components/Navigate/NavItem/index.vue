@@ -35,7 +35,7 @@ export default {
     navIndex: {
       type: Number,
       required: true,
-    }
+    },
   },
   data() {
     return {};
@@ -44,11 +44,13 @@ export default {
     this.handleTransition();
   },
   methods: {
-    handlePathTo() {//点击导航，路由跳转
+    handlePathTo() {
+      //点击导航，路由跳转
       this.$router.push(this.pathTo);
       // this.$store.dispatch("changeChoosedNav", this.navIndex);
     },
-    handleTransition() {//用于选中后文字颜色改变
+    handleTransition() {
+      //用于选中后文字颜色改变
       if (this.navIndex === this.choosedIndex) {
         //当前item的index等于选中的index时，即当前item被选中时，文字颜色改变
         let itemRef = "nav" + this.navIndex;
@@ -58,18 +60,20 @@ export default {
   },
   computed: mapState({
     choosedIndex: (state) => state.navigate.choosedNav,
-    inputId() {//inputId用于给input设置id，防止多个导航栏的input的id重复问题
+    inputId() {
+      //inputId用于给input设置id，防止多个导航栏的input的id重复问题
       return this.navIndex + this.navName;
     },
+    loginUserData: (state) => state.user.loginUserData,
   }),
   watch: {
     choosedIndex: {
       //监听当前选择的导航，导航改变时也改变文字的颜色
-      immediate: true,//加上了浏览器回退文字不会自动变色，为什么呢？
+      immediate: true, //加上了浏览器回退文字不会自动变色，为什么呢？
       handler() {
         this.$nextTick(() => {
           this.handleTransition();
-        })
+        });
       },
     },
   },

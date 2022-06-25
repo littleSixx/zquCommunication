@@ -9,7 +9,9 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    requestUrl: "http://10.12.2.100:8080",
+  },
   mutations: {},
   actions: {},
   /* vuex数据持久化配置 */

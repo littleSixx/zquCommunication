@@ -5,16 +5,23 @@ export const myMixin = {
       isLike: false,
       likeNum: 0,
       isComment: false,
-      commentValue: 0,
+      commentNum: 0,
       isCollect: false,
       collectValue: 0,
     };
   },
-  created() {
+  created() {},
+  watch: {
     //MainPostItem中postItem是通过props的方式获取的，这在data直接使用没问题
     //但是在PostDetail中postItem是通过computed的方式获取的，这在data不能直接使用
-    //因此需要在created中将postItem的数据赋给data，这样的话无论是props还是computed的数据，data都能拿到
-    this.postItem.likeNum = this.likeNum;
+    //因此需要在watch监听postItem的改变，将postItem的数据赋给data，这样的话无论是props还是computed的数据，data都能拿到
+    postItem: {
+      immediate: true,
+      handler() {
+        this.likeNum = this.postItem.likeNum;
+        this.isLike = this.postItem.isLike;
+      },
+    },
   },
   methods: {
     async handleLike(aid) {

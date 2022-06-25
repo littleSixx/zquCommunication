@@ -55,10 +55,10 @@ export default {
       showUserProfileView: false, //记录鼠标是否在头像图片中
       // isUserAction: true
       activeAuthorInfo: {
-        authorId: "",
+        uid: "",
         name: "",
-        authorDesc: "",
-        isFollow: "",
+        // authorDesc: "",
+        // isFollow: "",
       }, //鼠标移入显示的用户信息
     };
   },
@@ -80,12 +80,14 @@ export default {
       this.$refs.UserProfileView.style.opacity = 1;
       this.showUserProfileView = true;
       //鼠标移入获取用户信息
-      if (this.activeAuthorInfo !== payload.postItem.authorId) {
+      if (this.activeAuthorInfo !== payload.postItem.uid) {
         //当上一次移入的用户头像和这一次不一样时，需要重新发送请求，获取用户信息
-        this.activeAuthorInfo.authorId = payload.postItem.authorId;
-        this.activeAuthorInfo.name = payload.postItem.name;
-        this.activeAuthorInfo.authorDesc = payload.postItem.authorDesc;
-        this.activeAuthorInfo.isFollow = payload.postItem.isFollow;
+        this.activeAuthorInfo.uid = payload.postItem.uid;
+        this.activeAuthorInfo.username = payload.postItem.username;
+        this.$store.dispatch("reqHoverUserProfileInfo", payload.postItem.uid);
+        this.$store.dispatch("isFollow", payload.postItem.uid);
+        // this.activeAuthorInfo.authorDesc = payload.postItem.authorDesc;
+        // this.activeAuthorInfo.isFollow = payload.postItem.isFollow;
         //do something
       }
     });

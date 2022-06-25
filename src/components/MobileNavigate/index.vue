@@ -47,7 +47,7 @@
             ><i class="iconfont icon-icon_followed"></i>我的关注</a
           ></NavItem
         >
-        <NavItem :navName="navName" pathTo="/user" :navIndex="3"
+        <NavItem :navName="navName" :pathTo="userPathTo" :navIndex="3"
           ><a slot="nav-item-content"
             ><i class="iconfont icon-home"></i>我的信息</a
           ></NavItem
@@ -101,6 +101,7 @@ export default {
   },
   data() {
     return {
+      userPathTo: "",
       searchContent: "",
       select: 1,
       drawer: false,
@@ -109,6 +110,11 @@ export default {
       dialogVisible: false,
       radio: 0,
     };
+  },
+  created() {
+    this.userPathTo = this.loginUserData.user
+      ? "/user/" + this.loginUserData.user.uid
+      : "/user/-1";
   },
   mounted() {},
   methods: {
@@ -130,6 +136,7 @@ export default {
   },
   computed: mapState({
     choosedIndex: (state) => state.navigate.choosedNav,
+    loginUserData: (state) => state.user.loginUserData,
   }),
   watch: {
     choosedIndex: {
@@ -141,6 +148,16 @@ export default {
           changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
         }
       },
+    },
+    loginUserData: {
+      //监听用户登录，若用户已登录，则点击我的信息导航时，查询自己的uid信息
+      handler() {
+        this.userPathTo = this.loginUserData.user
+          ? "/user/" + this.loginUserData.user.uid
+          : "/user/-1";
+      },
+      immediate: true,
+      deep: true,
     },
   },
 };

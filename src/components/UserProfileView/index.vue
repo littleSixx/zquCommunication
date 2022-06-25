@@ -2,18 +2,57 @@
   <div class="user-profile-view-container">
     <div class="user-profile-view-bg"></div>
     <div class="user-profile-view-info">
-      <div class="avatar-container">
-        <el-avatar class="avatar" src="/images/default_avatar.png"></el-avatar>
+      <div
+        class="avatar-container"
+        @click="enterUserInfo(hoverUserProfileInfo)"
+      >
+        <el-avatar
+          class="avatar"
+          :src="
+            hoverUserProfileInfo.avatarUrl
+              ? hoverUserProfileInfo.avatarUrl
+              : '/images/default_avatar.png'
+          "
+        ></el-avatar>
       </div>
-      <div class="user-profile-view-header">
-        <h1 class="nickname">{{ authorInfo.name }}</h1>
+      <div
+        class="user-profile-view-header"
+        @click="enterUserInfo(hoverUserProfileInfo)"
+      >
+        <h1 class="nickname">{{ hoverUserProfileInfo.username }}</h1>
       </div>
       <div class="user-profile-view-body">
-        <p>{{ authorInfo.authorDesc }}</p>
+        <p>
+          {{
+            hoverUserProfileInfo.userDesc
+              ? hoverUserProfileInfo.userDesc
+              : "暂无信息"
+          }}
+        </p>
       </div>
       <div class="user-profile-view-footer">
-        <el-button size="mini" v-if="!authorInfo.isFollow">关 注</el-button>
-        <el-button size="mini" v-else>取 关</el-button>
+        <el-button
+          size="mini"
+          v-if="!hoverUserProfileInfo.isFollow"
+          @click="
+            handleFollow(
+              hoverUserProfileInfo.uid,
+              hoverUserProfileInfo.isFollow
+            )
+          "
+          >关 注</el-button
+        >
+        <el-button
+          size="mini"
+          v-else
+          @click="
+            handleFollow(
+              hoverUserProfileInfo.uid,
+              hoverUserProfileInfo.isFollow
+            )
+          "
+          >取 关</el-button
+        >
         <el-button size="mini">私 信</el-button>
       </div>
     </div>
@@ -21,11 +60,39 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "UserProfileView",
-  props: {
-    authorInfo: {
-      type: Object,
+  // props: {
+  //   authorInfo: {
+  //     type: Object,
+  //   },
+  // },
+  computed: {
+    ...mapState({
+      hoverUserProfileInfo: (state) => state.user.hoverUserProfileInfo,
+    }),
+  },
+  created() {
+    // this.$bus.$on("showUserProfileView", (payload) => {
+    // })
+  },
+  methods: {
+    handleFollow(uid, isFollow) {
+      const payload = {
+        uid,
+        isFollow,
+      };
+      this.$store.dispatch("follow", payload);
+    },
+    enterUserInfo(hoverUserProfileInfo) {
+      // this.$store.commit("");
+      this.$router.push({
+        name: "Info",
+        params: {
+          uid: hoverUserProfileInfo.uid,
+        },
+      });
     },
   },
   // watch: {
@@ -67,6 +134,7 @@ export default {
       float: left;
       width: 48px;
       height: 48px;
+      cursor: pointer;
       .avatar {
         width: 100%;
         height: 100%;
@@ -77,6 +145,7 @@ export default {
       // float: left;
       height: 40px;
       margin-left: 56px;
+      cursor: pointer;
       // margin-bottom: @normal-padding;
       // background-color: red;
 

@@ -118,7 +118,6 @@ export default {
         params: { postId: postId || undefined },
       });
     },
-    //这里的handleMouseEnter和handleMouseLeave可尝试用vue的minx
     handleMouseEnter() {
       const payload = {
         left: this.$refs.avatar.getBoundingClientRect().left,

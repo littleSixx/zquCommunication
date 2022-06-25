@@ -48,11 +48,16 @@ export default {
     // console.log(this.pageNum)
     let payload = { pageSize: this.pageSize, pageNum: this.pageNum };
     this.$store.dispatch("getPostItems", payload); //获取帖子数据
+    //若已经登录，则请求关注列表
+    if (this.loginUserData.token) {
+      this.$store.dispatch("reqAllFollow"); //获取该用户关注的所有人
+    }
   },
   mounted() {},
   methods: {},
   computed: mapState({
     postItems: (state) => state.post.postItems,
+    loginUserData: (state) => state.user.loginUserData,
   }),
   watch: {
     postItems() {
@@ -77,7 +82,7 @@ export default {
       flex: 1;
       margin: 0 @normal-padding;
       // min-width: 360px;
-      min-height: 300px; //为了没加载出来时也能有“加载中”显示的高度
+      min-height: 500px; //为了没加载出来时也能有“加载中”显示的高度
       border-radius: @normal-radius;
       transition: all 0.3s;
     }

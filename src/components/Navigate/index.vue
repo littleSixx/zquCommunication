@@ -32,7 +32,7 @@
           ><i class="iconfont icon-icon_followed"></i>我的关注</a
         >
       </NavItem>
-      <NavItem :navName="navName" pathTo="/user" :navIndex="3">
+      <NavItem :navName="navName" :pathTo="userPathTo" :navIndex="3">
         <a slot="nav-item-content"
           ><i class="iconfont icon-home"></i>我的信息</a
         >
@@ -91,12 +91,18 @@ export default {
   },
   data() {
     return {
+      userPathTo: "", //跳转到用户信息界面的路径
       searchContent: "", //搜索内容
       searchSelect: "", //搜索类型
       dialogVisible: false, //发布类型对话框
       radio: 0, //发布类型选择
       navName: "asideNav", //重要，因为是使用label+input的形式控制样式，而label是通过input的id和input绑定的。由于id不能重复，这就导致了有多个导航栏时(pc, mobile)会导致input的id冲突
     };
+  },
+  created() {
+    this.userPathTo = this.loginUserData.user
+      ? "/user/" + this.loginUserData.user.uid
+      : "/user/-1";
   },
   mounted() {
     changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
@@ -116,6 +122,7 @@ export default {
   },
   computed: mapState({
     choosedIndex: (state) => state.navigate.choosedNav,
+    loginUserData: (state) => state.user.loginUserData,
   }),
   watch: {
     choosedIndex: {
@@ -124,6 +131,16 @@ export default {
       handler() {
         changeTracker(this.$refs.tracker, this.choosedIndex); //网页刷新后通过获取本地存储恢复定位
       },
+    },
+    loginUserData: {
+      //监听用户登录，若用户已登录，则点击我的信息导航时，查询自己的uid信息
+      handler() {
+        this.userPathTo = this.loginUserData.user
+          ? "/user/" + this.loginUserData.user.uid
+          : "/user/-1";
+      },
+      immediate: true,
+      deep: true,
     },
   },
 };

@@ -86,8 +86,11 @@ export default {
     }
 
     .main {
-      //防止图片过大导致越界
-      max-width: 100%;
+      //防止图片过大导致越界,但没有用
+      // max-width: 100%;
+      ::v-deep img {
+        max-width: 100%;
+      }
     }
   }
 

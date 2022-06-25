@@ -2,6 +2,34 @@ import request from "@/network/request.js";
 import qs from "qs";
 // import mockRequest from "@/network/mockRequest.js";
 
+//查询某个用户所有关注的人
+export const reqAllFollow = () =>
+  request({
+    url: `/follow/all`,
+    method: "get",
+  });
+
+//查询某个用户是否已被关注
+export const isFollow = (uid) =>
+  request({
+    url: `/follow/or/not/${uid}`,
+    method: "get",
+  });
+
+//查询某个用户信息
+export const findUserInfo = (uid) =>
+  request({
+    url: `/user/find/${uid}`,
+    method: "get",
+  });
+
+//关注或取关他人
+export const follow = (payload) =>
+  request({
+    url: `/follow/${payload.uid}/${payload.isFollow}`,
+    method: "put",
+  });
+
 //给帖子点赞
 export const likePost = (payload) =>
   request({

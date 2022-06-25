@@ -2,28 +2,31 @@
   <div class="user-info">
     <div class="left-container">
       <div class="email-container">
-        <span class="title">邮 箱：</span><span>{{user.email}}</span>
+        <span class="title">邮 箱：</span><span>{{ user.email }}</span>
       </div>
       <div class="birthday-container">
-        <span class="title">生 日：</span><span>{{user.birthday}}</span>
+        <span class="title">生 日：</span><span>{{ user.birthday }}</span>
       </div>
       <div class="desc-container">
-        <span class="title">简 介：</span><span>{{user.desc}}</span>
+        <span class="title">简 介：</span
+        ><span>{{ user.userDesc ? user.userDesc : "暂无简介" }}</span>
       </div>
     </div>
     <!-- <el-divider direction="vertical"></el-divider> -->
     <div class="right-container">
       <div class="nickname-container">
-        <span class="title">昵 称：</span><span>{{user.name}}</span>
+        <span class="title">昵 称：</span><span>{{ user.username }}</span>
       </div>
       <div class="gender-container">
-        <span class="title">性 别：</span><span>{{user.gender === 0 ? "男" : "女"}}</span>
+        <span class="title">性 别：</span
+        ><span>{{ user.gender === 0 ? "女" : "男" }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "UserInfo",
   data() {
@@ -31,17 +34,26 @@ export default {
       user: {},
     };
   },
+  computed: {
+    ...mapState({
+      loginUserData: (state) => state.user.loginUserData,
+    }),
+  },
   created() {
     this.$store.dispatch("changeChoosedUserNav", 0);
-    this.$API.reqUserInfo("uid")
-    .then(res => {
-      if(res.status === 200) {
-        this.user = res.data
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    }) 
+    let uid = this.$route.params.uid;
+    console.log("uid:", uid);
+    this.$API
+      .findUserInfo(uid)
+      .then((res) => {
+        if (res.status === 200) {
+          this.user = res.data.data;
+          this.$bus.$emit("userInfo", this.user);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   methods: {},
 };

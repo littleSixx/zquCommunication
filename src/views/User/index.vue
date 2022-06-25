@@ -1,14 +1,98 @@
 <template>
   <div class="user">
     <div class="user-header">
-      <el-button class="logout-btn" @click="logout" size="mini" type="primary"
+      <el-button
+        class="logout-btn"
+        v-show="user.uid == loginUserData.user.uid"
+        @click="logout"
+        size="mini"
+        type="primary"
         >退出登录</el-button
       >
+      <el-button
+        class="change-avatar-btn"
+        v-show="user.uid == loginUserData.user.uid"
+        @click="changeAvatar"
+        size="mini"
+        type="primary"
+        >更换头像</el-button
+      >
+      <!-- 更换头像 -->
+      <el-dialog
+        class="change-avatar-dialog"
+        append-to-body
+        :center="true"
+        width="400px"
+        title="更换头像"
+        :visible.sync="dialogVisible"
+      >
+        <div class="upload-container">
+          <!-- <el-upload
+            :data="{ load: 'aaa' }"
+            action="http://10.12.2.100:8080/user/file"
+            list-type="picture-card"
+            :auto-upload="true"
+          >
+            <i slot="default" class="el-icon-plus"></i>
+            <div slot="file" slot-scope="{ file }">
+              <img
+                class="el-upload-list__item-thumbnail"
+                :src="file.url"
+                alt=""
+              />
+              <span class="el-upload-list__item-actions">
+                <span
+                  class="el-upload-list__item-preview"
+                  @click="handlePictureCardPreview(file)"
+                >
+                  <i class="el-icon-zoom-in"></i>
+                </span>
+                <span
+                  v-if="!disabled"
+                  class="el-upload-list__item-delete"
+                  @click="handleDownload(file)"
+                >
+                  <i class="el-icon-download"></i>
+                </span>
+                <span
+                  v-if="!disabled"
+                  class="el-upload-list__item-delete"
+                  @click="handleRemove(file)"
+                >
+                  <i class="el-icon-delete"></i>
+                </span>
+              </span>
+            </div>
+          </el-upload>
+          <img width="100%" :src="dialogImageUrl" alt="" /> -->
+          <el-upload
+            class="avatar-uploader"
+            name="multipartFile"
+            :headers="imageUploadHeaders"
+            :action="requestUrl + '/user/upload/file?dir=avatar_url'"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :on-error="handleAvatarError"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </el-dialog>
+      <!--  -->
       <div class="user-head">
-        <div class="user-avatar"></div>
-        <div class="username">little-six</div>
+        <div
+          class="user-avatar"
+          :style="{
+            backgroundImage: user.avatarUrl
+              ? `url(${user.avatarUrl})`
+              : '/images/default_user_background.jpg',
+          }"
+        ></div>
+        <div class="username">{{ user.username }}</div>
         <div class="user-desc">
-          这个人很懒~这个人很懒~这个人很懒~这个人很懒~
+          {{ user.userDesc ? user.userDesc : "暂无简介" }}
         </div>
       </div>
     </div>
@@ -25,22 +109,75 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import UserNav from "@/components/UserNav/";
 export default {
   name: "User",
   components: {
     UserNav,
   },
+  data() {
+    return {
+      user: {},
+      dialogVisible: false,
+      imageUrl: "",
+      imageUploadHeaders: { authorization: "" },
+    };
+  },
+  computed: {
+    ...mapState({
+      requestUrl: (state) => state.requestUrl,
+      loginUserData: (state) => state.user.loginUserData,
+    }),
+  },
   created() {
     this.$store.dispatch("changeChoosedNav", 3);
+    this.$bus.$on("userInfo", (user) => {
+      this.user = user;
+      this.imageUploadHeaders.authorization = this.loginUserData.token;
+      this.imageUrl = this.user.avatarUrl;
+    });
   },
   methods: {
+    handleAvatarError(err, file) {
+      this.$message.error("上传失败");
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+      const isLt5M = file.size / 1024 / 1024 < 5;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG或PNG 格式!");
+      }
+      if (!isLt5M) {
+        this.$message.error("上传头像图片大小不能超过 5MB!");
+      }
+      return isJPG && isLt5M;
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      this.dialogVisible = false;
+      this.$message.success("更换成功");
+      //更换头像成功后重新请求数据
+      this.$API
+        .findUserInfo(this.loginUserData.user.uid)
+        .then((res) => {
+          if (res.status === 200) {
+            this.user = res.data.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     backBtnClick() {
       this.$router.push("/index");
     },
     logout() {
       this.$store.commit("CLEARLOGINUSERDATA");
       this.$router.replace("/");
+    },
+    changeAvatar() {
+      this.dialogVisible = true;
     },
   },
   // beforeDestroy() {
@@ -98,7 +235,8 @@ export default {
       background-color: rgba(0, 0, 0, 0.1);
     }
 
-    .logout-btn {
+    .logout-btn,
+    .change-avatar-btn {
       position: absolute;
       top: 0;
       right: 0;
@@ -106,6 +244,16 @@ export default {
       margin-right: 16px;
       ::v-deep span {
         font-size: 13px;
+      }
+    }
+    .change-avatar-btn {
+      margin-top: 60px;
+    }
+    .change-avatar-dialog {
+      .upload-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
     .user-head {
@@ -182,5 +330,36 @@ export default {
       background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     }
   }
+}
+.avatar-uploader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar-uploader {
+  ::v-deep .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      border-color: #409eff;
+    }
+  }
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
