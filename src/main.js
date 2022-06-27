@@ -3,7 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 // import "@/network/mock/mock.js";
-import * as api from "@/network/index.js"
+import * as api from "@/network/index.js";
+import infiniteScroll from "vue-infinite-scroll";
 // import requests from "@/network/request.js"
 // import VueElementUISkeleton from 'vue-elementui-skeleton';
 import {
@@ -29,7 +30,7 @@ import {
   Drawer,
   Tooltip,
   Loading,
-  Message
+  Message,
 } from "element-ui";
 Vue.use(Input);
 Vue.use(Select);
@@ -53,6 +54,7 @@ Vue.use(Progress);
 Vue.use(Drawer);
 Vue.use(Tooltip);
 Vue.use(Loading);
+Vue.use(infiniteScroll);
 // Vue.use(VueElementUISkeleton);
 
 import Navigate from "./components/Navigate/";
@@ -68,7 +70,7 @@ Vue.config.productionTip = false;
 new Vue({
   beforeCreate() {
     Vue.prototype.$bus = this;
-    Vue.prototype.$API = api
+    Vue.prototype.$API = api;
     Vue.prototype.$message = Message;
   },
   router,

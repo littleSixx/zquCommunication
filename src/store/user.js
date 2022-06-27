@@ -7,12 +7,13 @@ import {
 } from "@/network/index.js";
 import { follow, isFollow, reqAllFollow } from "../network";
 import { Message } from "element-ui";
+import Vue from "vue";
 
 const state = {
   loginUserData: window.localStorage.getItem("store")
     ? window.localStorage.getItem("store")
     : {},
-  hoverUserProfileInfo: {},
+  hoverUserProfileInfo: {},//用户查询某个用户的用户信息（跳到该用户的主页）
   allFollow: [],
 };
 const mutations = {
@@ -20,6 +21,7 @@ const mutations = {
   //   state.loginUserData = data;
   // },
   USERLOGIN(state, data) {
+    console.log("USERLOGIN:", data);
     state.loginUserData = data;
   },
   CLEARLOGINUSERDATA(state) {
@@ -116,6 +118,10 @@ const actions = {
       console.log(result);
       if (result.status === 200 && result.data.flag === true) {
         Message.success("关注成功");
+        Vue.prototype.$bus.$emit(
+          "reqHoverUserProfileInfo",
+          content.state.hoverUserProfileInfo.uid
+        );
         return result.data;
       } else {
         Message.error("关注失败", result.data.msg);
@@ -131,7 +137,10 @@ const actions = {
       let result = await reqAllFollow();
       console.log(result);
       if (result.status === 200 && result.data.flag === true) {
-        content.commit("REQALLFOLLOW", result.data.data);
+        //若能找到关注列表信息（找不到信息的话data为null）
+        if (result.data.data) {
+          content.commit("REQALLFOLLOW", result.data.data);
+        }
         // Message.success("关注成功");
         return result.data;
       } else {

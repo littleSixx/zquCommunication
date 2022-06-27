@@ -1,10 +1,10 @@
 <template>
-  <div class="follow-item">
-    <el-avatar class="avatar" :style="handleAvatar()"></el-avatar>
+  <div class="follow-item" @click="enterUserInfo(followItem.uid)">
+    <el-avatar class="avatar" :src="followItem.avatarUrl"></el-avatar>
     <div class="follow-user-info">
-      <div class="follow-user-name">无名氏</div>
+      <div class="follow-user-name">{{ followItem.username }}</div>
       <div class="follow-user-intro">
-        这个人很懒~这个人很懒~这个人很懒~这个人很懒~这个人很懒~这个人很懒~
+        {{ followItem.userDesc }}
       </div>
     </div>
   </div>
@@ -14,16 +14,20 @@
 export default {
   name: "FollowItem",
   props: {
-    avatar: {
-      default: "/images/default_avatar.png",
-    },
+    followItem: {},
   },
+  created() {},
   methods: {
     handleAvatar() {
-      return {
-        backgroundImage: `url(${this.avatar})`,
-        backgroundSize: "100%",
-      };
+      return `url(${this.followItem.avatarUrl})`;
+    },
+    enterUserInfo(uid) {
+      this.$router.push({
+        name: "Info",
+        params: {
+          uid: uid,
+        },
+      });
     },
   },
 };
@@ -46,11 +50,9 @@ export default {
     background: rgba(0, 0, 0, 0.08);
   }
   .avatar {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background-repeat: no-repeat;
+    ::v-deep img {
+      width: 100%;
+    }
   }
   .follow-user-info {
     width: calc(100% - 40px);

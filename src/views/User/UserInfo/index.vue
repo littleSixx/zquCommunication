@@ -2,24 +2,24 @@
   <div class="user-info">
     <div class="left-container">
       <div class="email-container">
-        <span class="title">邮 箱：</span><span>{{ user.email }}</span>
+        <span class="title">邮 箱：</span><span>{{ hoverUserProfileInfo.email }}</span>
       </div>
       <div class="birthday-container">
-        <span class="title">生 日：</span><span>{{ user.birthday }}</span>
+        <span class="title">生 日：</span><span>{{ hoverUserProfileInfo.birthday }}</span>
       </div>
       <div class="desc-container">
         <span class="title">简 介：</span
-        ><span>{{ user.userDesc ? user.userDesc : "暂无简介" }}</span>
+        ><span>{{ hoverUserProfileInfo.userDesc ? hoverUserProfileInfo.userDesc : "暂无简介" }}</span>
       </div>
     </div>
     <!-- <el-divider direction="vertical"></el-divider> -->
     <div class="right-container">
       <div class="nickname-container">
-        <span class="title">昵 称：</span><span>{{ user.username }}</span>
+        <span class="title">昵 称：</span><span>{{ hoverUserProfileInfo.username }}</span>
       </div>
       <div class="gender-container">
         <span class="title">性 别：</span
-        ><span>{{ user.gender === 0 ? "女" : "男" }}</span>
+        ><span>{{ hoverUserProfileInfo.gender === 0 ? "女" : "男" }}</span>
       </div>
     </div>
   </div>
@@ -31,29 +31,29 @@ export default {
   name: "UserInfo",
   data() {
     return {
-      user: {},
+      // user: {},
     };
   },
   computed: {
     ...mapState({
       loginUserData: (state) => state.user.loginUserData,
+      hoverUserProfileInfo: (state) => state.user.hoverUserProfileInfo,
     }),
   },
   created() {
     this.$store.dispatch("changeChoosedUserNav", 0);
-    let uid = this.$route.params.uid;
-    console.log("uid:", uid);
-    this.$API
-      .findUserInfo(uid)
-      .then((res) => {
-        if (res.status === 200) {
-          this.user = res.data.data;
-          this.$bus.$emit("userInfo", this.user);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // let uid = this.$route.params.uid;
+    // this.$API
+    //   .findUserInfo(uid)
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       this.user = res.data.data;
+    //       this.$bus.$emit("userInfo", this.user);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
   methods: {},
 };

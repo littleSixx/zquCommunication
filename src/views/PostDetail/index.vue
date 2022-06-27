@@ -2,8 +2,14 @@
   <div class="post-detail">
     <div class="container">
       <div class="main">
+        <h1 class="atitle">{{ postItem.atitle }}</h1>
         <PostDetailHead :detailData="postItem" />
         <p v-html="postItem.acontent"></p>
+        <!-- 评论详情 -->
+        <div class="comment-detail">
+          <el-divider content-position="center">评论详情</el-divider>
+          <Comment />
+        </div>
       </div>
     </div>
     <!-- 点赞，收藏等操作 -->
@@ -32,20 +38,17 @@
 <script>
 import { mapState } from "vuex";
 import PostDetailHead from "@/components/PostDetailHead/";
+import Comment from "./Comment";
 import { myMixin } from "../../utils/myMixin";
 export default {
   name: "PostDetail",
   components: {
     PostDetailHead,
+    Comment
   },
   mixins: [myMixin],
   data() {
-    return {
-      // likeNum: 0,
-      // isLike: false,
-      // collectValue: 0,
-      // isCollect: false,
-    };
+    return {};
   },
   computed: {
     ...mapState({
@@ -56,13 +59,7 @@ export default {
     const payload = { postId: this.$route.params.postId };
     this.$store.dispatch("getPostDetail", payload);
   },
-  methods: {
-    // handleLike() {
-    //   this.isLike = !this.isLike;
-    //   if (this.isLike) this.likeNum++;
-    //   else this.likeNum--;
-    // },
-  },
+  methods: {},
 };
 </script>
 
@@ -86,10 +83,20 @@ export default {
     }
 
     .main {
-      //防止图片过大导致越界,但没有用
-      // max-width: 100%;
+      .atitle {
+        font-weight: 800;
+        font-size: 32px;
+        letter-spacing: 3px;
+        margin-bottom: 26px;
+      }
       ::v-deep img {
         max-width: 100%;
+      }
+    }
+    .comment-detail {
+      margin-top: 70px;
+      ::v-deep .el-divider__text {
+        background-color: transparent;
       }
     }
   }

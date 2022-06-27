@@ -82,21 +82,17 @@ export default {
     };
   },
   props: {
-    // avatar: {
-    //   type: String,
-    //   default: "/images/default_avatar.png",
-    // },
     postItem: {
       type: Object,
     },
   },
   created() {},
   methods: {
-    handleAvatarImage() {
-      return {
-        backgroundImage: `url(${this.avatar})`,
-      };
-    },
+    // handleAvatarImage() {
+    //   return {
+    //     backgroundImage: `url(${this.avatar})`,
+    //   };
+    // },
     // handleLike() {
     //   this.isLike = !this.isLike;
     //   if (this.isLike) this.likeValue++;

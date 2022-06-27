@@ -3,7 +3,7 @@
     <div class="user-header">
       <el-button
         class="logout-btn"
-        v-show="user.uid == loginUserData.user.uid"
+        v-show="hoverUserProfileInfo.uid == loginUserData.user.uid"
         @click="logout"
         size="mini"
         type="primary"
@@ -11,7 +11,7 @@
       >
       <el-button
         class="change-avatar-btn"
-        v-show="user.uid == loginUserData.user.uid"
+        v-show="hoverUserProfileInfo.uid == loginUserData.user.uid"
         @click="changeAvatar"
         size="mini"
         type="primary"
@@ -82,17 +82,30 @@
       </el-dialog>
       <!--  -->
       <div class="user-head">
-        <div
+        <!-- <div
           class="user-avatar"
           :style="{
-            backgroundImage: user.avatarUrl
-              ? `url(${user.avatarUrl})`
+            backgroundImage: hoverUserProfileInfo.avatarUrl
+              ? `url(${hoverUserProfileInfo.avatarUrl})`
               : '/images/default_user_background.jpg',
           }"
-        ></div>
-        <div class="username">{{ user.username }}</div>
+        ></div> -->
+        <el-avatar
+          class="user-avatar"
+          :size="100"
+          :src="
+            hoverUserProfileInfo.avatarUrl
+              ? hoverUserProfileInfo.avatarUrl
+              : '/images/default_user_background.jpg'
+          "
+        ></el-avatar>
+        <div class="username">{{ hoverUserProfileInfo.username }}</div>
         <div class="user-desc">
-          {{ user.userDesc ? user.userDesc : "暂无简介" }}
+          {{
+            hoverUserProfileInfo.userDesc
+              ? hoverUserProfileInfo.userDesc
+              : "暂无简介"
+          }}
         </div>
       </div>
     </div>
@@ -122,21 +135,36 @@ export default {
       dialogVisible: false,
       imageUrl: "",
       imageUploadHeaders: { authorization: "" },
+      user: {},
     };
   },
   computed: {
     ...mapState({
       requestUrl: (state) => state.requestUrl,
       loginUserData: (state) => state.user.loginUserData,
+      hoverUserProfileInfo: (state) => state.user.hoverUserProfileInfo,
     }),
   },
   created() {
     this.$store.dispatch("changeChoosedNav", 3);
-    this.$bus.$on("userInfo", (user) => {
-      this.user = user;
-      this.imageUploadHeaders.authorization = this.loginUserData.token;
-      this.imageUrl = this.user.avatarUrl;
-    });
+    // this.$bus.$on("userInfo", (user) => {
+    //   this.user = user;
+    //   this.imageUploadHeaders.authorization = this.loginUserData.token;
+    //   this.imageUrl = this.user.avatarUrl;
+    // });
+    let uid = this.$route.params.uid;
+    // this.$API
+    //   .findUserInfo(uid)
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       this.user = res.data.data;
+    //       // this.$bus.$emit("userInfo", this.user);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    this.$store.dispatch("reqHoverUserProfileInfo", uid);
   },
   methods: {
     handleAvatarError(err, file) {
@@ -193,7 +221,7 @@ export default {
   transform: translateX(-50%);
   width: 60%;
   max-width: @container-max-width;
-  height: 1500px;
+  min-height: 500px;
   margin-top: 3px;
   background: rgba(255, 255, 255, 0.85);
   // padding: @normal-padding*3 @normal-padding*2;
@@ -263,12 +291,9 @@ export default {
       z-index: 2; //防止被遮罩层覆盖
 
       .user-avatar {
-        width: 100px;
-        height: 100px;
-        margin-bottom: @normal-padding;
-        border-radius: 50%;
-        background-image: url("/images/default_avatar.png");
-        background-size: 100% 100%;
+        ::v-deep img {
+          width: 100%;
+        }
       }
       .username {
         width: 150px;

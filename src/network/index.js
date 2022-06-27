@@ -26,8 +26,11 @@ export const findUserInfo = (uid) =>
 //关注或取关他人
 export const follow = (payload) =>
   request({
-    url: `/follow/${payload.uid}/${payload.isFollow}`,
+    url: `/follow/${payload.uid}`,
     method: "put",
+    params: {
+      isFollow: payload.isFollow,
+    },
   });
 
 //给帖子点赞

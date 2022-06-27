@@ -78,12 +78,16 @@ export default {
     // })
   },
   methods: {
-    handleFollow(uid, isFollow) {
+    async handleFollow(uid, isFollow) {
       const payload = {
         uid,
         isFollow,
       };
-      this.$store.dispatch("follow", payload);
+      try {
+        this.$store.dispatch("follow", payload);
+      } catch (err) {
+        console.log(err);
+      }
     },
     enterUserInfo(hoverUserProfileInfo) {
       // this.$store.commit("");
@@ -138,6 +142,9 @@ export default {
       .avatar {
         width: 100%;
         height: 100%;
+        ::v-deep img {
+          width: 100%;
+        }
       }
     }
 

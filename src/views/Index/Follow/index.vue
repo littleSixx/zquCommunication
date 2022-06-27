@@ -2,15 +2,21 @@
   <div class="follow">
     <p class="follow-me">我的关注</p>
     <nav class="follow-list">
-      <div v-if="!loginUserData.token">
-        <span>还没有登录</span>
-        <a class="click-login" @click="goToLogin">点击此处登录</a>
+      <div v-show="!loginUserData.token || !allFollow.length">
+        <div v-show="!loginUserData.token">
+          <span>还没有登录</span>
+          <a class="click-login" @click="goToLogin">点击此处登录</a>
+        </div>
+        <div v-show="!allFollow.length && loginUserData.token">
+          <span>暂无关注</span>
+        </div>
       </div>
-      <div v-else>
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
+      <div v-show="allFollow.length">
+        <FollowItem
+          v-for="followItem in allFollow"
+          :followItem="followItem"
+          :key="followItem.uid"
+        />
       </div>
     </nav>
   </div>
@@ -27,6 +33,7 @@ export default {
   computed: {
     ...mapState({
       loginUserData: (state) => state.user.loginUserData,
+      allFollow: (state) => state.user.allFollow,
     }),
   },
   methods: {

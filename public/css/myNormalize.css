@@ -26,4 +26,11 @@ h1 {
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+ul {
+  padding: 0;
+  margin: 0;
+}
+li {
+  list-style: none;
+}
 /*  */

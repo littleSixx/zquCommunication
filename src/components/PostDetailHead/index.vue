@@ -4,7 +4,7 @@
       <div class="left-container">
         <div class="user-info">
           <el-avatar
-            :size="50"
+            :size="40"
             class="avatar"
             :src="detailData.aimgUrl"
           ></el-avatar>
@@ -73,6 +73,7 @@ export default {
   .divider {
     margin: @normal-padding 0;
     height: 2px;
+    margin-bottom: 24px;
   }
 }
 </style>
