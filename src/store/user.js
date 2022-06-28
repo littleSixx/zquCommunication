@@ -1,6 +1,6 @@
 import {
   reqUserRegister,
-  reqUserInfo,
+  // reqUserInfo,
   sendEmail,
   reqUserLogin,
   findUserInfo,
@@ -27,8 +27,6 @@ const mutations = {
   CLEARLOGINUSERDATA(state) {
     state.loginUserData = {};
     window.localStorage.removeItem("store");
-    console.log(window.localStorage.getItem("store"));
-    console.log(state.loginUserData);
   },
   REQHOVERUSERPROFILEINFO(state, data) {
     // state.hoverUserProfileInfo = data;

@@ -135,7 +135,6 @@ export default {
       dialogVisible: false,
       imageUrl: "",
       imageUploadHeaders: { authorization: "" },
-      user: {},
     };
   },
   computed: {
@@ -201,7 +200,7 @@ export default {
       this.$router.push("/index");
     },
     logout() {
-      this.$store.commit("CLEARLOGINUSERDATA");
+      this.$store.commit("CLEARALLUSERDATA");
       this.$router.replace("/");
     },
     changeAvatar() {

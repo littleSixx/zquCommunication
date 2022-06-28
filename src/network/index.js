@@ -2,6 +2,52 @@ import request from "@/network/request.js";
 import qs from "qs";
 // import mockRequest from "@/network/mockRequest.js";
 
+//查询某个评论的所有回复
+export const showReply = (payload) =>
+    request({
+        url: `/reply/${payload.pageSize}/${payload.currentPage}/${payload.cid}`,
+        method: "get"
+    })
+
+//添加一个回复
+export const addReply = (payload) =>
+    request({
+        url: `/reply`,
+        method: "post",
+        data: {
+            cid: payload.cid,
+            toUserId: payload.toUserId,
+            fromUserId: payload.fromUserId,
+            content: payload.content,
+            flag: payload.isLike
+        }
+    })
+
+//给评论点赞/取消点赞
+export const likeComment = (payload) =>
+    request({
+        url: `/comment/${payload.cid}`,
+        method: "put",
+        params: {
+            flag: payload.isLike
+        }
+    })
+
+//查询某个帖子的所有评论
+export const showComment = (payload) =>
+    request({
+        url: `/comment/${payload.pageSize}/${payload.currentPage}/${payload.aid}`,
+        method: "get"
+    })
+
+//添加一个评论
+export const addComment = (payload) =>
+    request({
+      url: `/comment`,
+      method: "post",
+      data: { articleId:payload.articleId, content:payload.content, userId:payload.userId }
+    })
+
 //查询某个用户所有关注的人
 export const reqAllFollow = () =>
   request({

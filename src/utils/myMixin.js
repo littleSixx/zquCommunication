@@ -37,11 +37,11 @@ export const myMixin = {
         this.$message.error(err);
       }
     },
-    handleCollect() {
-      this.isCollect = !this.isCollect;
-      if (this.isCollect) this.collectValue++;
-      else this.collectValue--;
-    },
+    // handleCollect() {
+    //   this.isCollect = !this.isCollect;
+    //   if (this.isCollect) this.collectValue++;
+    //   else this.collectValue--;
+    // },
     //点击评论按钮，跳转到详情页，并自动滚动到评论区域
     handleComment(postId) {
       // this.isComment = !this.isComment;

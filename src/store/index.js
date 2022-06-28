@@ -12,7 +12,20 @@ export default new Vuex.Store({
   state: {
     requestUrl: "http://10.12.2.100:8080",
   },
-  mutations: {},
+  mutations: {
+    CLEARALLUSERDATA(state) {
+      //清除所有用户信息信息
+      state.user.loginUserData = {};
+      state.user.allFollow = [];
+      //清除帖子信息
+      state.post.postItemsData = { articles: [], totalPage: 0 };
+      state.post.postDetail = {};
+      //清除失物招领信息
+      // state.lostAndFindItems = {};
+      window.localStorage.removeItem("store");
+
+    }
+  },
   actions: {},
   /* vuex数据持久化配置 */
   plugins: [

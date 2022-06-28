@@ -8,7 +8,7 @@
         <!-- 评论详情 -->
         <div class="comment-detail">
           <el-divider content-position="center">评论详情</el-divider>
-          <Comment />
+          <Comment :postItem="postItem" />
         </div>
       </div>
     </div>
@@ -85,6 +85,7 @@ export default {
     .main {
       .atitle {
         font-weight: 800;
+        line-height: 1.5;
         font-size: 32px;
         letter-spacing: 3px;
         margin-bottom: 26px;

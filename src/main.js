@@ -31,6 +31,7 @@ import {
   Tooltip,
   Loading,
   Message,
+  Pagination
 } from "element-ui";
 Vue.use(Input);
 Vue.use(Select);
@@ -55,6 +56,7 @@ Vue.use(Drawer);
 Vue.use(Tooltip);
 Vue.use(Loading);
 Vue.use(infiniteScroll);
+Vue.use(Pagination);
 // Vue.use(VueElementUISkeleton);
 
 import Navigate from "./components/Navigate/";

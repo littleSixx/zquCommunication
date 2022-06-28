@@ -4,28 +4,28 @@
     <div class="user-profile-view-info">
       <div
         class="avatar-container"
-        @click="enterUserInfo(hoverUserProfileInfo)"
+        @click="enterUserInfo(info)"
       >
         <el-avatar
           class="avatar"
           :src="
-            hoverUserProfileInfo.avatarUrl
-              ? hoverUserProfileInfo.avatarUrl
+            info.avatarUrl
+              ? info.avatarUrl
               : '/images/default_avatar.png'
           "
         ></el-avatar>
       </div>
       <div
         class="user-profile-view-header"
-        @click="enterUserInfo(hoverUserProfileInfo)"
+        @click="enterUserInfo(info)"
       >
-        <h1 class="nickname">{{ hoverUserProfileInfo.username }}</h1>
+        <h1 class="nickname">{{ info.username }}</h1>
       </div>
       <div class="user-profile-view-body">
         <p>
           {{
-            hoverUserProfileInfo.userDesc
-              ? hoverUserProfileInfo.userDesc
+            info.userDesc
+              ? info.userDesc
               : "暂无信息"
           }}
         </p>
@@ -33,11 +33,11 @@
       <div class="user-profile-view-footer">
         <el-button
           size="mini"
-          v-if="!hoverUserProfileInfo.isFollow"
+          v-if="!info.isFollow"
           @click="
             handleFollow(
-              hoverUserProfileInfo.uid,
-              hoverUserProfileInfo.isFollow
+              info.uid,
+              info.isFollow
             )
           "
           >关 注</el-button
@@ -47,8 +47,8 @@
           v-else
           @click="
             handleFollow(
-              hoverUserProfileInfo.uid,
-              hoverUserProfileInfo.isFollow
+              info.uid,
+              info.isFollow
             )
           "
           >取 关</el-button
@@ -63,19 +63,26 @@
 import { mapState } from "vuex";
 export default {
   name: "UserProfileView",
-  // props: {
-  //   authorInfo: {
-  //     type: Object,
-  //   },
-  // },
+  props: {
+    //若用户进入到我的关注页面，则使用authorInfo的数据
+    authorInfo: {
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      info: {}
+    }
+  },
   computed: {
+    //若鼠标移入头像，则使用hoverUserProfileInfo的数据
     ...mapState({
       hoverUserProfileInfo: (state) => state.user.hoverUserProfileInfo,
     }),
   },
   created() {
-    // this.$bus.$on("showUserProfileView", (payload) => {
-    // })
+    console.log("authorInfo",this.authorInfo)
+    this.info = this.authorInfo.uid ? this.authorInfo : this.hoverUserProfileInfo
   },
   methods: {
     async handleFollow(uid, isFollow) {
@@ -89,12 +96,12 @@ export default {
         console.log(err);
       }
     },
-    enterUserInfo(hoverUserProfileInfo) {
+    enterUserInfo(info) {
       // this.$store.commit("");
       this.$router.push({
         name: "Info",
         params: {
-          uid: hoverUserProfileInfo.uid,
+          uid: info.uid,
         },
       });
     },

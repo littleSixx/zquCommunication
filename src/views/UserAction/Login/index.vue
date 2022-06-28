@@ -45,13 +45,6 @@ export default {
       }
       callback(new Error("请输入合法的电子邮箱"));
     };
-    // const checkPassword = (rule, value, callback) => {
-    //   rule;
-    //   value;
-    //   return this.ruleForm.password === value
-    //     ? callback()
-    //     : callback(new Error("两次密码不一样"));
-    // };
     return {
       dialogVisible: false,
       dialogImageUrl: "",
