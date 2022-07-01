@@ -11,6 +11,7 @@
         <ul
           class="infinite-list"
           infinite-scroll-immediate="false"
+          infinite-scroll-distance="200px"
           style="overflow: auto"
         >
           <li
@@ -54,8 +55,6 @@ export default {
     this.$store.dispatch("changeChoosedNav", 0); //进入该页面后，改变vuex中已选中的导航
     this.pageNum = 1;
     this.$store.commit("RESETPOSTITEMSDATA");
-    // let payload = { pageSize: this.pageSize, pageNum: this.pageNum };
-    // this.$store.dispatch("getPostItems", payload); //获取帖子数据
     //若已经登录，则请求关注列表
     if (this.loginUserData.token) {
       this.$store.dispatch("reqAllFollow"); //获取该用户关注的所有人

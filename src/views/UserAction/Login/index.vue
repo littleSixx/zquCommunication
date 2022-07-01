@@ -25,7 +25,7 @@
       </el-form-item>
       <div class="switch-container">
         <a class="switch" @click="switchMode('register')">切换到注册</a>
-        <a class="switch" @click="switchMode('modifyPwd')">修改密码</a>
+<!--        <a class="switch" @click="switchMode('modifyPwd')">修改密码</a>-->
       </div>
     </el-form>
   </div>

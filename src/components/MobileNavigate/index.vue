@@ -2,22 +2,22 @@
   <div class="mobile-navigate">
     <i class="el-icon-s-unfold" @click="handleNavDrawer"></i>
     <div class="search-input">
-      <el-input
-        style="el-input"
-        size="small"
-        clearable
-        placeholder="请输入内容"
-        v-model="searchContent"
-        class="input-with-select"
-      >
-        <el-select v-model="select" slot="prepend" placeholder="请选择">
-          <el-option label="综合" value="1"></el-option>
-          <el-option label="帖子" value="2"></el-option>
-          <el-option label="失物招领" value="3"></el-option>
-          <el-option label="用户" value="4"></el-option>
-        </el-select>
-        <el-button slot="append" icon="el-icon-search"></el-button>
-      </el-input>
+<!--      <el-input-->
+<!--        style="el-input"-->
+<!--        size="small"-->
+<!--        clearable-->
+<!--        placeholder="请输入内容"-->
+<!--        v-model="searchContent"-->
+<!--        class="input-with-select"-->
+<!--      >-->
+<!--        <el-select v-model="select" slot="prepend" placeholder="请选择">-->
+<!--          <el-option label="综合" value="1"></el-option>-->
+<!--          <el-option label="帖子" value="2"></el-option>-->
+<!--          <el-option label="失物招领" value="3"></el-option>-->
+<!--          <el-option label="用户" value="4"></el-option>-->
+<!--        </el-select>-->
+<!--        <el-button slot="append" icon="el-icon-search"></el-button>-->
+<!--      </el-input>-->
     </div>
 
     <!--抽屉 -->

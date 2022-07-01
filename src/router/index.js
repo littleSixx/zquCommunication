@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store/index.js";
 import routes from "./routes.js";
+import { Message } from "element-ui";
 
 // import { Message } from "element-ui"
 // Vue.prototype.$message = Message;
@@ -36,7 +37,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.isAuth === true) {
     //如果没有登录
     if (!userData.token) {
-      Vue.prototype.$message.warning("请先登录");
+      console.log(Vue.prototype)
+      Message.warning("请先登录")
       //若来的页面是需要验证的，则跳到首页
       if (from.meta.isAuth === true) {
         next("/");

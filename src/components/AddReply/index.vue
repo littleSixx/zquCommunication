@@ -1,8 +1,8 @@
 <template>
   <div class="add-reply">
-    <el-avatar :src="loginUserData.avatarUrl" class="avatar" :size="54"></el-avatar>
+    <el-avatar :src="loginUserData ? loginUserData.avatarUrl : '/images/default_avatar.png'" class="avatar" :size="54"></el-avatar>
     <div class="container">
-      <el-input type="textarea" v-model="inputReply" @focus="handleTextareaFocus" placeholder="发布一条回复" :show-word-limit="true" :rows="2" ref="textarea" />
+      <el-input type="textarea" v-model="inputReply" @focus="handleTextareaFocus" :placeholder="'回复给：' + addReplyData.toUsername" :show-word-limit="true" :rows="2" ref="textarea" />
     </div>
     <el-button class="commit-button" @click="addReply" type="primary" size="mini">发布</el-button>
   </div>
@@ -16,18 +16,14 @@ export default {
   components: {
   },
   props: {
-    commentItem: {
+    addReplyData: {
       type: Object
-    },
-    toUserId: {
-      type: Number,
-      default: -1
     }
   },
   data() {
     return {
       //真正使用的item
-      useItem: this.commentItem,
+      // useItem: this.commentItem,
       inputReply: ""
     }
   },
@@ -39,13 +35,26 @@ export default {
   created() {},
   methods: {
     addReply() {
-      let payload = {
-        cid: this.useItem.cid,
-        toUserId: this.toUserId,
-        fromUserId: this.loginUserData.uid,
-        content: this.inputReply,
+      //当用户已经登录时再发评论
+      if(this.loginUserData && this.loginUserData.uid) {
+        let payload = {
+          // cid: this.addReplyData.cid,
+          toUserId: this.addReplyData.toUserId,
+          fromUserId: this.loginUserData.uid,
+          content: this.inputReply,
+        }
+        //当cid存在时，则回复评论
+        if(this.addReplyData.cid) {
+          payload.cid = this.addReplyData.cid;
+        } else if(this.addReplyData.rid) {
+          //当rid存在时，则回复 回复
+          payload.rid = this.addReplyData.rid;
+        }
+        this.$store.dispatch("addReply", payload);
+      } else {
+        this.$message.warning("请先登录");
       }
-      this.$store.dispatch("addReply", payload);
+
     },
     handleTextareaFocus() {
       // this.$refs.textarea.$attrs.rows = "4";

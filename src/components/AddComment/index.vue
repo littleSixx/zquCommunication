@@ -1,6 +1,6 @@
 <template>
   <div class="add-comment">
-    <el-avatar :src="loginUserData.avatarUrl" class="avatar" :size="55"></el-avatar>
+    <el-avatar :src="loginUserData ? loginUserData.avatarUrl : '/images/default_avatar.png'" class="avatar" :size="55"></el-avatar>
     <div class="container">
       <el-input type="textarea" v-model="inputComment" @focus="handleTextareaFocus" placeholder="发布一条评论" :show-word-limit="true" :rows="3" ref="textarea" />
     </div>
@@ -35,12 +35,18 @@ export default {
   },
   methods: {
     addComment() {
-      let payload = {
-        articleId: this.postItem.aid,
-        content: this.inputComment,
-        userId: this.postItem.uid
+      //当用户已经登录时再发评论
+      if(this.loginUserData && this.loginUserData.uid) {
+        let payload = {
+          articleId: this.postItem.aid,
+          content: this.inputComment,
+          userId: this.loginUserData.uid
+        }
+        this.$store.dispatch("addComment", payload);
+      } else {
+        this.$message.warning("请先登录");
       }
-      this.$store.dispatch("addComment", payload);
+
     },
     handleTextareaFocus() {
       // this.$refs.textarea.$attrs.rows = "4";

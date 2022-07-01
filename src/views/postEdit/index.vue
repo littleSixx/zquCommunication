@@ -180,6 +180,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   min-height: 500px;
+  //overflow: scroll;
   padding: @normal-padding*3 @normal-padding*2;
   margin-left: @normal-padding;
   margin-bottom: 50px;

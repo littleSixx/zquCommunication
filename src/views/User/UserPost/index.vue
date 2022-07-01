@@ -1,10 +1,5 @@
 <template>
   <div class="user-post" v-infinite-scroll="load">
-    <!-- <MainPostItem
-      v-for="(postItem, index) in postItemsData.articles"
-      :postItem="postItem"
-      :key="index"
-    /> -->
     <ul
       class="infinite-list"
       infinite-scroll-immediate="false"

@@ -20,6 +20,10 @@ const mutations = {
   // USERREGISTER(state, data) {
   //   state.loginUserData = data;
   // },
+  //更换头像
+  CHANGEAVATARURL(state, data) {
+    state.loginUserData.user.avatarUrl = data;
+  },
   USERLOGIN(state, data) {
     console.log("USERLOGIN:", data);
     state.loginUserData = data;

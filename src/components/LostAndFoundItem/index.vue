@@ -1,21 +1,21 @@
 <template>
   <div class="lost-and-found-item">
     <div class="picture">
-      <el-image class="picture-content" :src="url" :fit="fit"></el-image>
+      <el-image class="picture-content" :src="imgArray[0]" :fit="fit"></el-image>
     </div>
     <div class="description">
-      <h1>{{ lostAndFindItem.findName }}</h1>
+      <h1>{{ lostAndFoundItem.tname }}</h1>
       <div class="find-time">
-        <span>发现时间：</span>{{ lostAndFindItem.findTime }}
+        <span>发现时间：</span>{{ lostAndFoundItem.ttime }}
       </div>
       <div class="find-site">
-        <span>发现地点：</span>{{ lostAndFindItem.findSite }}
+        <span>发现地点：</span>{{ lostAndFoundItem.tplace }}
       </div>
       <div class="find-num">
-        <span>数量：</span>{{ lostAndFindItem.findNum }}
+        <span>数量：</span>{{ lostAndFoundItem.tnum }}
       </div>
       <div class="find-des">
-        <span>描述：</span>{{ lostAndFindItem.findDesc }}
+        <span>描述：</span>{{ lostAndFoundItem.tdesc }}
       </div>
     </div>
   </div>
@@ -25,16 +25,27 @@
 export default {
   name: "LostAndFoundItem",
   props: {
-    lostAndFindItem: {
+    lostAndFoundItem: {
       type: Object,
     },
   },
   data() {
     return {
-      url: "./",
+      //封面图片
+      imgArray: "",
+      //图片填充形式
       fit: "fill",
     };
   },
+  created() {
+    this.handleImgUrl(this.lostAndFoundItem.timg);
+  },
+  methods: {
+    //后端返回来的图片地址是用逗号分隔的字符串，需要先处理
+    handleImgUrl(imgString) {
+      this.imgArray = imgString.split(",");
+    }
+  }
 };
 </script>
 
@@ -59,11 +70,11 @@ export default {
       height: 200px;
       @media (max-width: @pad-max-width) {
         width: 150px;
-        height: 150px;
+        height: 170px;
       }
       @media (max-width: @mobile-max-width) {
         width: 110px;
-        height: 110px;
+        height: 170px;
       }
     }
   }
@@ -76,11 +87,11 @@ export default {
 
     @media (max-width: @pad-max-width) {
       font-size: 18px;
-      height: 150px;
+      height: 170px;
     }
     @media (max-width: @mobile-max-width) {
       font-size: 16px;
-      height: 110px;
+      height: 170px;
     }
 
     h1 {

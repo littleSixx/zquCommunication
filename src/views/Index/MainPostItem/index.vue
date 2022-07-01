@@ -73,12 +73,6 @@ export default {
   mixins: [myMixin],
   data() {
     return {
-      // isLike: false,
-      // likeValue: 0,
-      // isComment: false,
-      // commentValue: 0,
-      // isCollect: false,
-      // collectValue: 0,
     };
   },
   props: {

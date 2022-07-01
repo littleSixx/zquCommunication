@@ -1,5 +1,5 @@
 <template>
-  <div class="lost-and-found">
+  <div class="lost-and-found" v-infinite-scroll="load">
     <div class="container">
       <div
         class="main"
@@ -8,14 +8,22 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(255, 255, 255, 0.8)"
       >
-        <LostAndFoundItem
-          v-for="lostAndFindItem in lostAndFindItems"
-          :lostAndFindItem="lostAndFindItem"
-          :key="lostAndFindItem.lostAndFoundId"
-        />
-        <!-- <LostAndFoundItem />
-        <LostAndFoundItem />
-        <LostAndFoundItem /> -->
+        <ul
+            class="infinite-list"
+            infinite-scroll-immediate="false"
+            infinite-scroll-distance="200px"
+            style="overflow: auto"
+        >
+          <li
+              v-for="lostAndFoundItem in lostAndFoundItems.losts"
+              :key="lostAndFoundItem.tid"
+              class="infinite-list-item"
+          >
+            <LostAndFoundItem
+                :lostAndFoundItem="lostAndFoundItem"
+            />
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -31,20 +39,35 @@ export default {
   },
   data() {
     return {
-      loading: true
+      loading: true,
+      pageSize: 4,
+      pageNum: 1
     }
   },
   created() {
     this.$store.dispatch("changeChoosedNav", 1);
-    this.$store.dispatch("getLostAndFoundItems");
+    this.pageNum = 1;
+    this.$store.commit("RESETLOSTANDFOUNDITEMSDATA");
   },
   computed: mapState({
-    lostAndFindItems: (state) => state.lostAndFound.lostAndFindItems,
+    lostAndFoundItems: (state) => state.lostAndFound.lostAndFoundItems,
   }),
   watch: {
-    lostAndFindItems() {
-      this.loading = false
+    lostAndFoundItems: {
+      deep: true,
+      handler() {
+        this.loading = false
+      }
     }
+  },
+  methods: {
+    load() {
+      if (this.pageNum <= this.lostAndFoundItems.totalPage || this.pageNum === 1) {
+        let payload = { pageSize: this.pageSize, currentPage: this.pageNum };
+        this.$store.dispatch("reqLostAndFoundItems", payload); //获取帖子数据
+        this.pageNum++;
+      }
+    },
   }
 };
 </script>

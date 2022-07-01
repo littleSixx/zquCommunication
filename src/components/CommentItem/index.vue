@@ -10,39 +10,47 @@
       <div class="comment-bottom">
         <div
             class="like"
-            @click="handleLike(useItem)"
+            @click="handleCommentLike(useItem)"
             :class="{ 'is-like': useItem.isLike }"
         >
           <el-badge :value="useItem.likeNum ? useItem.likeNum : 0" :max="99" class="item">
             <i class="iconfont icon-good-filling"></i>
           </el-badge>
         </div>
-        <a class="reply" @click="replyToComment(useItem.uid)">回复</a>
+        <a class="reply" @click="replyToComment(useItem.userId, useItem.username, useItem.cid)">回复</a>
       </div>
 
       <!-- 回复区域 -->
       <div class="reply-box">
-        <AddReply v-show="replyTextareaData.isShow" :commentItem="commentItem" :toUserId="commentItem.userId"/>
+        <AddReply v-show="replyTextareaData.isShow" :addReplyData="addReplyData"/>
         <!-- 回复item -->
-          <div class="reply-item" v-for="(reply, index) in commentReplys.replyList" :key="index">
+          <div class="reply-item" v-for="(reply) in commentReplys.replyList" :key="reply.rid">
             <el-avatar class="reply-avatar" :src="reply.fromUser.avatarUrl"  size="medium"></el-avatar>
             <div class="reply-container">
-              <p class="reply-username">{{reply.fromUser.username}}</p>
+              <p class="reply-username">{{reply.fromUser.username}} 回复给 {{reply.toUser.username}}</p>
               <span class="reply-time">{{reply.createDateTime}}</span>
               <p class="reply-text">
                 {{reply.content}}
               </p>
-              <div
-                  class="like"
-                  @click="handleLike(postItem.aid)"
-                  :class="{ 'is-like': reply.isLike }"
-              >
-                <el-badge :value="reply.likeNum ? reply.likeNum : 0" :max="99" class="item">
-                  <i class="iconfont icon-good-filling"></i>
-                </el-badge>
+              <div class="reply-bottom">
+                <div
+                    class="like"
+                    @click="handleReplyLike(reply)"
+                    :class="{ 'is-like': reply.isLike }"
+                >
+                  <el-badge :value="reply.likeNum ? reply.likeNum : 0" :max="99" class="item">
+                    <i class="iconfont icon-good-filling"></i>
+                  </el-badge>
+                </div>
+                <a class="reply" @click="replyToComment(reply.fromUserId, reply.fromUser.username, useItem.cid)">回复</a>
               </div>
             </div>
           </div>
+<!--        回复的分页-->
+        <div class="pagination-container">
+          <el-pagination class="my-reply-pagination" small hide-on-single-page layout="prev, pager, next" @current-change="replyChangePage" :page-size="pageSize" :page-count="commentReplys.maxPage" :total="commentReplys.total">
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -73,8 +81,17 @@ export default {
         previousClickReplyId: -1,
         isShow: false
       },
-      //指回复的对方id，用于传数据给回复框
-      toUserId: -1,
+      //传给回复框的数据
+      addReplyData: {
+        //指回复的对方id，用于传数据给回复框
+        toUserId: 0,
+        //指回复的对方名字，用于传数据给回复框
+        toUsername: "",
+        //回复给评论的评论id
+        cid: 0,
+        //回复给回复的回复id
+        rid: 0
+      },
       //回复的每页大小、当前页码
       pageSize: 4,
       pageNum: 1
@@ -92,6 +109,22 @@ export default {
     // replyTextareaDataClick() {
     //   this.replyTextareaData.isShow = !this.replyTextareaData.isShow;
     // },
+    async replyChangePage(page) {
+      console.log("变化后的页码：", page)
+      let payload = {
+        pageSize : this.pageSize,
+        currentPage : page,
+        cid : this.commentItem.cid
+      }
+      try {
+        let result = await this.$store.dispatch("showReply", payload);
+        if(result) {
+          this.commentReplys = result;
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
     async reqCommentReplys() {
       let payload = {
         pageSize: this.pageSize,
@@ -107,11 +140,19 @@ export default {
         console.log(err)
       }
     },
-    replyToComment(uid) {
-      this.toUserId = uid;
+    replyToReply(userId, username, rid) {
+      this.addReplyData.toUserId = userId;
+      this.addReplyData.toUsername = username;
+      this.addReplyData.rid = rid;
       this.replyTextareaData.isShow = !this.replyTextareaData.isShow;
     },
-    async handleLike(useItem) {
+    replyToComment(userId, username, cid) {
+      this.addReplyData.toUserId = userId;
+      this.addReplyData.toUsername = username;
+      this.addReplyData.cid = cid
+      this.replyTextareaData.isShow = !this.replyTextareaData.isShow;
+    },
+    async handleCommentLike(useItem) {
       const payload = { cid:useItem.cid, isLike:useItem.isLike };
       try {
         await this.$store.dispatch("likeComment", payload);
@@ -119,6 +160,18 @@ export default {
         if (useItem.isLike) {
           useItem.likeNum++;
         } else useItem.likeNum--;
+      } catch (err) {
+        this.$message.error(err);
+      }
+    },
+    async handleReplyLike(reply) {
+      const payload = { rid:reply.rid, isLike:reply.isLike };
+      try {
+        await this.$store.dispatch("likeReply", payload);
+        reply.isLike = !reply.isLike;
+        if (reply.isLike) {
+          reply.likeNum++;
+        } else reply.likeNum--;
       } catch (err) {
         this.$message.error(err);
       }
@@ -163,11 +216,8 @@ export default {
         &:hover {
           color: #0c7ed9;
         }
-
       }
-
     }
-
 
     .reply-box {
       // height: 150px;
@@ -196,8 +246,28 @@ export default {
           .reply-text {
             font-size: 14px;
           }
+          .reply-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 65px;
+            .reply {
+              cursor: pointer;
+              transition: all 0.2s;
+              &:hover {
+                color: #0c7ed9;
+              }
+            }
+          }
         }
       }
+
+      .my-reply-pagination {
+        ::v-deep button, ::v-deep .el-pager li {
+          background-color: transparent;
+        }
+      }
+
     }
   }
 

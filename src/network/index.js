@@ -2,10 +2,42 @@ import request from "@/network/request.js";
 import qs from "qs";
 // import mockRequest from "@/network/mockRequest.js";
 
+//获取失物招领首页的items
+export const reqLostAndFoundItems = (payload) =>
+    request({
+        url: `/lost/page/${payload.currentPage}/${payload.pageSize}/${payload.uid ? payload.uid : ""}`,
+        method: "get",
+    });
+
+//发布失物招领
+export const addLostAndFound = (payload) =>
+    request({
+        url: `/lost/insert`,
+        method: "post",
+        data: {
+            tName: payload.tName,
+            tPlace: payload.tPlace,
+            tTime: payload.tTime,
+            tNum: payload.tNum,
+            tDesc: payload.tDesc,
+            tImg: payload.tImg
+        }
+    })
+
+//给回复点赞
+export const likeReply = (payload) =>
+    request({
+        url: `/reply/${payload.rid}`,
+        method: "put",
+        params: {
+           flag: payload.isLike
+        }
+    })
+
 //查询某个评论的所有回复
 export const showReply = (payload) =>
     request({
-        url: `/reply/${payload.pageSize}/${payload.currentPage}/${payload.cid}`,
+        url: `/reply/page/${payload.pageSize}/${payload.currentPage}/${payload.cid}`,
         method: "get"
     })
 
@@ -36,7 +68,7 @@ export const likeComment = (payload) =>
 //查询某个帖子的所有评论
 export const showComment = (payload) =>
     request({
-        url: `/comment/${payload.pageSize}/${payload.currentPage}/${payload.aid}`,
+        url: `/comment/page/${payload.pageSize}/${payload.currentPage}/${payload.aid}`,
         method: "get"
     })
 
@@ -89,7 +121,7 @@ export const likePost = (payload) =>
 //获取首页帖子列表
 export const reqPostItems = (payload) =>
   request({
-    url: `/article/${payload.pageNum}/${payload.pageSize}/${
+    url: `/article/page/${payload.pageNum}/${payload.pageSize}/${
       payload.uid ? payload.uid : ""
     }`,
     method: "get",
@@ -99,12 +131,6 @@ export const reqPostItems = (payload) =>
 export const reqPostDetail = (payload) =>
   request({
     url: `/article/findOne/${payload.postId}`,
-    method: "get",
-  });
-
-export const reqLostAndFoundItems = () =>
-  request({
-    url: `/lostAndFoundItems`,
     method: "get",
   });
 

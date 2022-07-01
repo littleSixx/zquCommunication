@@ -145,6 +145,7 @@ export default {
     }),
   },
   created() {
+    this.imageUploadHeaders.authorization = this.loginUserData.token;
     this.$store.dispatch("changeChoosedNav", 3);
     // this.$bus.$on("userInfo", (user) => {
     //   this.user = user;
@@ -181,20 +182,26 @@ export default {
       return isJPG && isLt5M;
     },
     handleAvatarSuccess(res, file) {
+      // console.log("res:!!!",res)
       this.imageUrl = URL.createObjectURL(file.raw);
       this.dialogVisible = false;
       this.$message.success("更换成功");
+      //更换头像后修改本地存储里的头像链接
+      this.$store.commit("CHANGEAVATARURL", res.data.url);
       //更换头像成功后重新请求数据
-      this.$API
-        .findUserInfo(this.loginUserData.user.uid)
-        .then((res) => {
-          if (res.status === 200) {
-            this.user = res.data.data;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      let uid = this.$route.params.uid;
+      this.$store.dispatch("reqHoverUserProfileInfo", uid);
+
+      // this.$API
+      //   .findUserInfo(this.loginUserData.user.uid)
+      //   .then((res) => {
+      //     if (res.status === 200) {
+      //       this.user = res.data.data;
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     },
     backBtnClick() {
       this.$router.push("/index");

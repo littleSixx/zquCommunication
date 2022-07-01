@@ -6,7 +6,8 @@ import {
   showComment,
   addComment,
   likeComment,
-  addReply, showReply
+  addReply, showReply,
+  likeReply
 } from "../network";
 import { Message } from "element-ui";
 import router from "@/router"
@@ -19,6 +20,11 @@ const state = {
     }
   };
 const mutations = {
+  CLEARPOSTCOMMENT(state) {
+    state.postComment = {
+      commentList: []
+    }
+  },
   GETPOSTITEMS(state, data) {
     state.postItemsData.articles = state.postItemsData.articles.concat(
       data.articles
@@ -41,6 +47,22 @@ const mutations = {
   }
 };
 const actions = {
+  async likeReply(content, payload) {
+    try {
+      let result = await likeReply(payload);
+      console.log(result);
+      if (result.status === 200 && result.data.flag === true) {
+        Message.success("点赞成功");
+        return "ok";
+      } else {
+        Message.error("点赞失败");
+        return Promise.reject(new Error(result.data.msg));
+      }
+    } catch (err) {
+      console.log(err);
+      return Promise.reject(new Error("点赞失败，请先登录"));
+    }
+  },
   async showReply(content, payload) {
     try {
       let result = await showReply(payload);
@@ -82,8 +104,8 @@ const actions = {
         return Promise.reject(new Error(result.data.msg));
       }
     } catch (err) {
-      Message.error("点赞失败");
       console.log(err);
+      return Promise.reject(new Error("点赞失败，请先登录"));
     }
   },
   async addComment(content, payload) {
@@ -122,13 +144,14 @@ const actions = {
     try {
       let result = await likePost(payload);
       console.log(result);
-      if (result.status === 200 && result.data.flag === true) {
+      if (result && result.status === 200 && result.data.flag === true) {
         return "ok";
       } else {
         return Promise.reject(new Error(result.data.msg));
       }
     } catch (err) {
       console.log(err);
+      return Promise.reject(new Error("点赞失败,请先登录"));
     }
   },
   //刷新后获取首页帖子列表
@@ -180,7 +203,7 @@ const actions = {
       let result = await postArticle(payload);
       console.log(result);
       if (result.status === 200 && result.data.flag === true) {
-        // content.commit("GETPOSTDETAIL", result.data.data);
+        router.push("/index");
         Message.success("发布成功");
         return "ok";
       } else {

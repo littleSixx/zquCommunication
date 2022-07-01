@@ -57,7 +57,9 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    this.$store.commit("CLEARPOSTCOMMENT");
+  },
   methods: {
     //切换评论页码后，再次请求
     commentChangePage(page) {
