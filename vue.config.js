@@ -1,6 +1,9 @@
 const path = require("path");
 module.exports = {
   lintOnSave: false,
+  configureWebpack: {
+    devtool: 'source-map'
+  },
   pluginOptions: {
     "style-resources-loader": {
       preProcessor: "less",

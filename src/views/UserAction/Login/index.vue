@@ -19,13 +19,14 @@
       <el-form-item>
         <!-- <div class="btn-container" style="text-align: center"> -->
         <el-button type="primary" style="" @click="userLogin(ruleForm)"
-          >登录</el-button
+        >登录
+        </el-button
         >
         <!-- </div> -->
       </el-form-item>
       <div class="switch-container">
         <a class="switch" @click="switchMode('register')">切换到注册</a>
-<!--        <a class="switch" @click="switchMode('modifyPwd')">修改密码</a>-->
+        <!--        <a class="switch" @click="switchMode('modifyPwd')">修改密码</a>-->
       </div>
     </el-form>
   </div>
@@ -54,11 +55,11 @@ export default {
       },
       rules: {
         email: [
-          { required: true, message: "请输入电子邮箱", trigger: "blur" },
-          { validator: checkEmail, trigger: "blur" },
+          {required: true, message: "请输入电子邮箱", trigger: "blur"},
+          {validator: checkEmail, trigger: "blur"},
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          {required: true, message: "请输入密码", trigger: "blur"},
           {
             min: 8,
             max: 20,
@@ -113,6 +114,7 @@ export default {
     position: relative;
     margin-top: 50px;
   }
+
   .switch-container {
     .switch {
       display: block;
